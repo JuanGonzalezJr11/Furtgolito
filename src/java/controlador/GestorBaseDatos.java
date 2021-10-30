@@ -1175,10 +1175,11 @@ public class GestorBaseDatos {
     public void altaGol(Gol g){
         try{
             abrirConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Goles VALUES (?, ?, ?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Goles VALUES (?, ?, ?, ?)");
             ps.setInt(1, g.getJugador().getIdJugador());
             ps.setInt(2, g.getMinuto());
             ps.setInt(3, g.getPartido().getIdPartido());
+            ps.setBoolean(4, g.isContra());
             
             ps.executeUpdate();
             ps.close();

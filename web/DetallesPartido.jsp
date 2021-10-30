@@ -146,7 +146,7 @@
                                             <c:forEach items="${gol}" var="g">
                                                 <tr>
                                                     <td>
-                                                        ${g.minuto}
+                                                        ${g.minuto} ${g.golEnContra()}
                                                     </td>
                                                     <td>
                                                         ${g.jugador.dorsal}

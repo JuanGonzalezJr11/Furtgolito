@@ -99,7 +99,14 @@ public class AltaGolServlet extends HttpServlet {
         int minuto = Integer.parseInt((String) request.getParameter("txtMinuto"));
         String idPartido = request.getParameter("txtIdPartido");
         Partido partido = g.obtenerPartidoPorId(Integer.parseInt(idPartido));
-        g.altaGol(new Gol(jugador, minuto, partido));
+        String[] contra = request.getParameterValues("chkContra");
+        if(contra != null){
+            boolean contra2 = false;
+        }
+        else{
+            boolean contra2 = true;
+        }
+        g.altaGol(new Gol(jugador, minuto, partido, contra));
         response.sendRedirect("/Furtgolito/AltaGolServlet?idPartido="+idPartido);
     }
 

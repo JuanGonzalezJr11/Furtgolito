@@ -38,9 +38,15 @@
                 </label>
                 <input type="number" name="txtMinuto"/>
             </div>
+            <div>
+                <label>
+                    Gol en contra:
+                </label>
+                <input type="chkContra" name="chkContra" id="chkContra" value="true" />
+            </div>
             <input type="hidden" name="txtIdPartido" id="idPartido" value="${partido.idPartido}"/>
             <c:choose>
-                <c:when test="${cantidadGolesLYV == (partido.resultadoEquipoLocal + partido.resultadoEquipoVisitante)}">
+                <c:when test="${cantidadGoles < cantidadGolesLYV}">
                     <button type="submit">
                         Agregar
                     </button>
@@ -102,7 +108,7 @@
                             <c:forEach items="${gol}" var="g">
                                 <tr>
                                     <td>
-                                        ${g.minuto}
+                                        ${g.minuto} ${g.contra}
                                     </td>
                                     <td>
                                         ${g.jugador.dorsal}

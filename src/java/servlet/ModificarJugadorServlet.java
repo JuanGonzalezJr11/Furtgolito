@@ -97,7 +97,7 @@ public class ModificarJugadorServlet extends HttpServlet {
         Boolean capitan = Boolean.parseBoolean(request.getParameter("cboCapitan"));
         String telefono = request.getParameter("txtTelefono");
         String email = request.getParameter("txtEmail");
-        g.modificarJugador(new Jugador(idJugador, nombre, apellido, edad, posicionJugador, dorsal, equipo, capitan,telefono, email));
+        g.modificarJugador(new Jugador(idJugador, nombre, apellido, edad, posicionJugador, dorsal, equipo, capitan, telefono, email));
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListaJugadores.jsp");
 	rd.forward(request, response);
     }
