@@ -19,7 +19,7 @@
             Usuarios |
         </a>
         <a href="/Furtgolito/ListaPartidos.jsp">
-            Partidos |
+            Jornadas y partidos |
         </a>
         <a href="/Furtgolito/ListaEquipos.jsp">
             Equipos |

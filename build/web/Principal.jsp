@@ -16,36 +16,111 @@
     <body>
         <h1>¡Bienvenidos a Furtgolito!</h1>
         <%@include file = "Navbar.jsp" %>
-        <h2>
-            Partidos
-        </h2>
-        <br>
-        <h2>
-            Novedades
-        </h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Título
-                    </th>
-                    <th>
-                        Descripción
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${gestor.listadoNovedades}" var="listadoNovedades">
+        <div>
+            HACER QUE LOS EQUIPOS SE CREEN CON PUNTAJE DE 0.
+            <h2>
+                Posiciones
+            </h2>
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            ${listadoNovedades.titulo}
-                        </td>
-                        <td>
-                            ${listadoNovedades.descripcion}
-                        </td>
+                        <th>
+                            Posición
+                        </th>
+                        <th>
+                            Equipo
+                        </th>
+                        <th>
+                            Puntos
+                        </th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="${gestor.posicionesEquiposTOP3}" var="e">
+                        <tr>
+                            <td>
+                                ${e.posicion}
+                            </td>
+                            <td>
+                                ${e.nombre}
+                            </td>
+                            <td>
+                                ${e.puntos}
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>
+                Goleadores
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Equipo
+                        </th>
+                        <th>
+                            Goles
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${gestor.tablaGoleadoresTOP3}" var="g">
+                        <tr>
+                            <td>
+                                ${g.nombre} ${g.apellido}
+                            </td>
+                            <td>
+                                ${g.nombreEquipo}
+                            </td>
+                            <td>
+                                ${g.cantidadGoles}
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>
+                Próxima jornada
+            </h2>
+        </div>
+        <br>
+        <div>
+            <h2>
+                Novedades
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Título
+                        </th>
+                        <th>
+                            Descripción
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${gestor.listadoNovedades}" var="listadoNovedades">
+                        <tr>
+                            <td>
+                                ${listadoNovedades.titulo}
+                            </td>
+                            <td>
+                                ${listadoNovedades.descripcion}
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

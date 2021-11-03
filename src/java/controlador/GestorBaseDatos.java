@@ -238,7 +238,8 @@ public class GestorBaseDatos {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 String nombre = rs.getString("nombre");
-                eq = new Equipo(idEquipo, nombre);
+                int puntos = rs.getInt("puntos");
+                eq = new Equipo(idEquipo, nombre, puntos);
             }
             rs.close();
         }
@@ -472,7 +473,7 @@ public class GestorBaseDatos {
     public void altaEquipo(Equipo eq){
         try{
             abrirConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Equipos VALUES (?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Equipos VALUES (?, 0)");
             ps.setString(1, eq.getNombre());
             
             ps.executeUpdate();
@@ -783,7 +784,7 @@ public class GestorBaseDatos {
     public void altaPartido(Partido p){
         try{
             abrirConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Partidos VALUES (?, ?, null, ?, ?, ?, ?, ?, null, null, 'false')");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Partidos VALUES (?, ?, null, ?, ?, ?, ?, ?, null, null, 'false', null, null)");
             ps.setString(1, p.getFecha());
             ps.setString(2, p.getHora());
             ps.setInt(3, p.getEquipoLocal().getIdEquipo());
@@ -1033,7 +1034,7 @@ public class GestorBaseDatos {
         try{
             abrirConexion();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Partidos");
+            ResultSet rs = st.executeQuery("SELECT * FROM Partidos ORDER BY jornada, hora");
             while(rs.next()){
                 int idPartido = rs.getInt("idPartido");
                 int jornada = rs.getInt("jornada");
@@ -1052,8 +1053,12 @@ public class GestorBaseDatos {
                 int resultadoEquipoLocal = rs.getInt("resultadoEquipoLocal");
                 int resultadoEquipoVisitante = rs.getInt("resultadoEquipoVisitante");
                 boolean estado = rs.getBoolean("estado");
+                int idEquipoGanador = rs.getInt("idEquipoGanador");
+                Equipo equipoGanador = obtenerEquipo(idEquipoGanador);
+                int idEquipoPerdedor = rs.getInt("idEquipoPerdedor");
+                Equipo equipoPerdedor = obtenerEquipo(idEquipoPerdedor); 
                 
-                lista.add(new Partido(idPartido, fecha, hora, mvp, equipoLocal, equipoVisitante, arbitro, campo, jornada, resultadoEquipoLocal, resultadoEquipoVisitante, estado));
+                lista.add(new Partido(idPartido, fecha, hora, mvp, equipoLocal, equipoVisitante, arbitro, campo, jornada, resultadoEquipoLocal, resultadoEquipoVisitante, estado, equipoGanador, equipoPerdedor));
             }
             rs.close();
         }
@@ -1096,7 +1101,31 @@ public class GestorBaseDatos {
         boolean resultado = false;
         try{
             abrirConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET idMvp = ?, resultadoEquipoLocal = ?, resultadoEquipoVisitante = ?, estado = 'true' WHERE idPartido = ?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET idMvp = ?, resultadoEquipoLocal = ?, resultadoEquipoVisitante = ?, estado = 'true', idEquipoGanador = ?, idEquipoPerdedor = ? WHERE idPartido = ?");
+            ps.setInt(1, partido.getMvp().getIdJugador());
+            ps.setInt(2, partido.getResultadoEquipoLocal());
+            ps.setInt(3, partido.getResultadoEquipoVisitante());
+            ps.setInt(4, partido.getEquipoGanador().getIdEquipo());
+            ps.setInt(5, partido.getEquipoPerdedor().getIdEquipo());
+            ps.setInt(6, partido.getIdPartido());
+            
+            ps.executeUpdate();
+            resultado = true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return resultado;
+    }
+    
+    public boolean resultadoPartidoSinGanador(Partido partido){
+        boolean resultado = false;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET idMvp = ?, resultadoEquipoLocal = ?, resultadoEquipoVisitante = ?, estado = 'true', idEquipoGanador = null, idEquipoPerdedor = null WHERE idPartido = ?");
             ps.setInt(1, partido.getMvp().getIdJugador());
             ps.setInt(2, partido.getResultadoEquipoLocal());
             ps.setInt(3, partido.getResultadoEquipoVisitante());
@@ -1138,8 +1167,12 @@ public class GestorBaseDatos {
                 int resultadoEquipoLocal = rs.getInt("resultadoEquipoLocal");
                 int resultadoEquipoVisitante = rs.getInt("resultadoEquipoVisitante");
                 boolean estado = rs.getBoolean("estado");
+                int idEquipoGanador = rs.getInt("idEquipoGanador");
+                Equipo equipoGanador = obtenerEquipo(idEquipoGanador);
+                int idEquipoPerdedor = rs.getInt("idEquipoPerdedor");
+                Equipo equipoPerdedor = obtenerEquipo(idEquipoPerdedor);
                 
-                p = new Partido(idPartido, fecha, hora, mvp, equipoLocal, equipoVisitante, arbitro, campo, jornada, resultadoEquipoLocal, resultadoEquipoVisitante, estado);
+                p = new Partido(idPartido, fecha, hora, mvp, equipoLocal, equipoVisitante, arbitro, campo, jornada, resultadoEquipoLocal, resultadoEquipoVisitante, estado, equipoGanador, equipoPerdedor);
             }
             rs.close();
         }
@@ -1156,6 +1189,109 @@ public class GestorBaseDatos {
         try{
             abrirConexion();
             PreparedStatement ps = con.prepareStatement("DELETE FROM Partidos WHERE idPartido = ?");
+            ps.setInt(1, idPartido);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public ArrayList<Partido> getListadoJornadas(){
+        ArrayList<Partido> lista = new ArrayList<>();
+        try{
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT jornada\n" +
+                                           "FROM Partidos\n" +
+                                           "GROUP BY jornada");
+            while(rs.next()){
+                int jornada = rs.getInt("jornada");
+                
+                lista.add(new Partido(jornada));
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return lista;
+    }
+    
+    public void asignarPuntos(int idEquipo, int puntos){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET puntos = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, puntos);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    // LimpiarPartido:
+    public void eliminarGolesPorPartido(int idPartido){
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Goles WHERE idPartido = ?");
+            ps.setInt(1, idPartido);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void eliminarTarjetasRojasPorPartido(int idPartido){
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM TarjetasRojas WHERE idPartido = ?");
+            ps.setInt(1, idPartido);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void eliminarTarjetasAmarillasPorPartido(int idPartido){
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM TarjetasAmarillas WHERE idPartido = ?");
+            ps.setInt(1, idPartido);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void eliminarResultadoPartidoPorPartido(int idPartido){
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET idMvp = null, resultadoEquipoLocal = null, resultadoEquipoVisitante = null, estado = 'false', idEquipoGanador = null, idEquipoPerdedor = null WHERE idPartido = ?");
             ps.setInt(1, idPartido);
             ps.executeUpdate();
         }
@@ -1207,8 +1343,9 @@ public class GestorBaseDatos {
                 int idJugador = rs.getInt("idJugador");
                 Jugador jugador = obtenerJugadorPorId(idJugador);
                 int minuto = rs.getInt("minuto");
+                boolean contra = rs.getBoolean("contra");
                 
-                lista.add(new Gol(idGol, jugador, minuto));
+                lista.add(new Gol(idGol, jugador, minuto, contra));
             }
             rs.close();
         }
@@ -1462,5 +1599,62 @@ public class GestorBaseDatos {
             cerrarConexion();
         }
         return cantidad;
+    }
+    
+    // ----------------------------- TABLAS ------------------------------------
+    
+    public ArrayList<GoleadorDTO> getTablaGoleadoresTOP3(){
+        ArrayList<GoleadorDTO> lista = new ArrayList<>();
+        try{
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT TOP 3 j.nombre, j.apellido, e.nombre 'equipo', count(idGol) 'cantidad goles'\n" +
+                                           "FROM Jugadores j\n" +
+                                           "INNER JOIN Goles g ON j.idJugador = g.idJugador\n" +
+                                           "INNER JOIN Equipos e ON j.idEquipo = e.idEquipo\n" +
+                                           "GROUP BY idPartido, j.nombre, j.apellido, e.nombre\n" +
+                                           "ORDER BY [Cantidad goles] DESC");
+            while(rs.next()){
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String nombreEquipo = rs.getString("equipo");
+                int cantidadGoles = rs.getInt("cantidad goles");
+                
+                lista.add(new GoleadorDTO(nombre, apellido, nombreEquipo, cantidadGoles));
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return lista;
+    }
+    
+    public ArrayList<EquipoDTO> getPosicionesEquiposTOP3(){
+        ArrayList<EquipoDTO> lista = new ArrayList<>();
+        try{
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT TOP 3 *, ROW_NUMBER() OVER (ORDER BY puntos DESC) 'posicion'\n" +
+                                           "FROM Equipos");
+            while(rs.next()){
+                String nombre = rs.getString("nombre");
+                int puntos = rs.getInt("puntos");
+                int posicion = rs.getInt("posicion");
+                
+                lista.add(new EquipoDTO(nombre, puntos, posicion));
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return lista;
     }
 }

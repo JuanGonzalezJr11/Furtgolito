@@ -43,54 +43,6 @@
                 Agregar
             </button>
         </form>
-        <!-- <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            Minuto
-                        </th>
-                        <th colspan="4">
-                            Jugador
-                        </th>
-                        <th>
-                            Equipo
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-        <c:forEach items="${tarjetaAmarilla}" var="ta">
-            <tr>
-                <td>
-            ${ta.minuto}
-        </td>
-        <td>
-            ${ta.jugador.dorsal}
-        </td>
-        <td>
-            ${ta.jugador.nombre}
-        </td>
-        <td>
-            ${ta.jugador.apellido}
-        </td>
-        <td>
-            ${ta.jugador.posicionJugador}
-        </td>
-        <td>
-            ${ta.jugador.equipo}
-        </td>
-        <td>
-            <a href="/Furtgolito/EliminarTarjetaAmarillaServlet?idTarjetaAmarilla=${ta.idTarjetaAmarilla}&idPartido=${partido.idPartido}">
-                <button>
-                    Eliminar
-                </button>
-            </a>
-        </td>
-    </tr>
-        </c:forEach>
-    </tbody>
-</table>
-</div> -->
         <div>
             <c:choose>
                 <c:when test="${cantidadTarjetasAmarillas == 0}">

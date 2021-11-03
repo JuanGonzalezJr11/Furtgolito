@@ -1,30 +1,26 @@
 package modelo;
 
-public class Equipo {
+public class EquipoDTO {
     private int idEquipo;
     private String nombre;
     private int puntos;
+    private int posicion;
 
-    public Equipo() {
-    }
-
-    public Equipo(int idEquipo, String nombre, int puntos) {
+    public EquipoDTO(int idEquipo, String nombre, int puntos, int posicion) {
         this.idEquipo = idEquipo;
         this.nombre = nombre;
         this.puntos = puntos;
+        this.posicion = posicion;
     }
 
-    public Equipo(int idEquipo, String nombre) {
-        this.idEquipo = idEquipo;
+    public EquipoDTO(String nombre, int puntos, int posicion) {
         this.nombre = nombre;
+        this.puntos = puntos;
+        this.posicion = posicion;
     }
-    
-    public Equipo(String nombre) {
-        this.nombre = nombre;
-    }
-    
+
     public int getIdEquipo() {
-        return this.idEquipo;
+        return idEquipo;
     }
 
     public void setIdEquipo(int idEquipo) {
@@ -32,7 +28,7 @@ public class Equipo {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -47,8 +43,16 @@ public class Equipo {
         this.puntos = puntos;
     }
 
+    public int getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
+
     @Override
     public String toString() {
-        return nombre;
+        return "EquipoDTO{" + "idEquipo=" + idEquipo + ", nombre=" + nombre + ", puntos=" + puntos + ", posicion=" + posicion + '}';
     }
 }

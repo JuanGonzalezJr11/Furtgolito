@@ -146,7 +146,7 @@
                                             <c:forEach items="${gol}" var="g">
                                                 <tr>
                                                     <td>
-                                                        ${g.minuto} ${g.golEnContra()}
+                                                        ${g.minuto}' ${g.golEnContra()}
                                                     </td>
                                                     <td>
                                                         ${g.jugador.dorsal}
@@ -201,7 +201,7 @@
                                             <c:forEach items="${tarjetaAmarilla}" var="ta">
                                                 <tr>
                                                     <td>
-                                                        ${ta.minuto}
+                                                        ${ta.minuto}'
                                                     </td>
                                                     <td>
                                                         ${ta.jugador.dorsal}
@@ -259,7 +259,7 @@
                                             <c:forEach items="${tarjetaRoja}" var="tr">
                                                 <tr>
                                                     <td>
-                                                        ${tr.minuto}
+                                                        ${tr.minuto}'
                                                     </td>
                                                     <td>
                                                         ${tr.jugador.dorsal}

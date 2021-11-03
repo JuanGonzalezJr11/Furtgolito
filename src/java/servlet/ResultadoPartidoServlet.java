@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Equipo;
 import modelo.Jugador;
 import modelo.Partido;
 
@@ -42,7 +43,7 @@ public class ResultadoPartidoServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ResultadoPartidoServlet</title>");            
+            out.println("<title>Servlet ResultadoPartidoServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ResultadoPartidoServlet at " + request.getContextPath() + "</h1>");
@@ -72,7 +73,7 @@ public class ResultadoPartidoServlet extends HttpServlet {
         ArrayList<Jugador> j = g.obtenerJugadorPorPartido(idPartido);
         request.setAttribute("mvp", j);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/ResultadoPartido.jsp");
-	rd.forward(request, response);
+        rd.forward(request, response);
     }
 
     /**
@@ -92,9 +93,46 @@ public class ResultadoPartidoServlet extends HttpServlet {
         int resultadoEquipoVisitante = Integer.parseInt((String) request.getParameter("txtResultadoEquipoVisitante"));
         String idMvp = request.getParameter("cboMvp");
         Jugador mvp = g.obtenerMvp(Integer.parseInt(idMvp));
-        g.resultadoPartido(new Partido(idPartido, mvp, resultadoEquipoLocal, resultadoEquipoVisitante));
+        Partido p = new Partido();
+        p = g.obtenerPartidoPorId(idPartido);
+        Equipo equipoGanador = null;
+        Equipo equipoPerdedor = null;
+        if (resultadoEquipoLocal > resultadoEquipoVisitante) {
+            equipoGanador = p.getEquipoLocal();
+            equipoPerdedor = p.getEquipoVisitante();
+            int puntosEquipoGanador = equipoGanador.getPuntos();
+            int puntosEquipoPerdedor = equipoPerdedor.getPuntos();
+            int puntosNuevosEquipoGanador = puntosEquipoGanador + 3;
+            int puntosNuevosEquipoPerdedor = puntosEquipoPerdedor + 0;
+            g.asignarPuntos(equipoGanador.getIdEquipo(), puntosNuevosEquipoGanador);
+            g.asignarPuntos(equipoPerdedor.getIdEquipo(), puntosNuevosEquipoPerdedor);
+            g.resultadoPartido(new Partido(idPartido, mvp, resultadoEquipoLocal, resultadoEquipoVisitante, equipoGanador, equipoPerdedor));
+        }
+        if (resultadoEquipoLocal < resultadoEquipoVisitante) {
+            equipoGanador = p.getEquipoVisitante();
+            equipoPerdedor = p.getEquipoLocal();
+            int puntosEquipoGanador = equipoGanador.getPuntos();
+            int puntosEquipoPerdedor = equipoPerdedor.getPuntos();
+            int puntosNuevosEquipoGanador = puntosEquipoGanador + 3;
+            int puntosNuevosEquipoPerdedor = puntosEquipoPerdedor + 0;
+            g.asignarPuntos(equipoGanador.getIdEquipo(), puntosNuevosEquipoGanador);
+            g.asignarPuntos(equipoPerdedor.getIdEquipo(), puntosNuevosEquipoPerdedor);
+            g.resultadoPartido(new Partido(idPartido, mvp, resultadoEquipoLocal, resultadoEquipoVisitante, equipoGanador, equipoPerdedor));
+        }
+        if (resultadoEquipoLocal == resultadoEquipoVisitante) {
+            equipoGanador = null;
+            equipoPerdedor = null;
+            int puntosEquipoLocal = p.getEquipoLocal().getPuntos();
+            int puntosEquipoVisitante = p.getEquipoVisitante().getPuntos();
+            int puntosNuevosEquipoLocal = puntosEquipoLocal + 1;
+            int puntosNuevosEquipoVisitante = puntosEquipoVisitante + 1;
+            g.asignarPuntos(p.getEquipoLocal().getIdEquipo(), puntosNuevosEquipoLocal);
+            g.asignarPuntos(p.getEquipoVisitante().getIdEquipo(), puntosNuevosEquipoVisitante);
+            g.resultadoPartidoSinGanador(new Partido(idPartido, mvp, resultadoEquipoLocal, resultadoEquipoVisitante));
+        }
+        // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListaPartidos.jsp");
-	rd.forward(request, response);
+        rd.forward(request, response);
     }
 
     /**

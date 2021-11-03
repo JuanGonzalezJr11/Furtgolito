@@ -42,7 +42,7 @@
                 <label>
                     Gol en contra:
                 </label>
-                <input type="chkContra" name="chkContra" id="chkContra" value="true" />
+                <input type="checkbox" name="chkContra" id="chkContra" value="true">
             </div>
             <input type="hidden" name="txtIdPartido" id="idPartido" value="${partido.idPartido}"/>
             <c:choose>
@@ -55,34 +55,6 @@
                     Ya ha cargado todos los goles de este partido.
                 </c:otherwise>
             </c:choose>
-
-            <!-- <div>
-                <h1>
-                    Nuevo gol
-                </h1>
-            </div>
-            <div>
-                <label>
-                    Jugador (autor):
-                </label>
-                <select name="cboJugador" id="cboJugador">
-            <c:forEach var="j" items="${jugador}">
-                <option value="${j.idJugador}">
-                ${j.dorsal}. ${j.nombre} ${j.apellido} (${j.posicionJugador}) - ${j.equipo}
-            </option>
-            </c:forEach>
-        </select>
-    </div>
-    <div>
-        <label>
-            Minuto:
-        </label>
-        <input type="number" name="txtMinuto"/>
-    </div>
-    <input type="hidden" name="txtIdPartido" id="idPartido" value="${partido.idPartido}"/>
-    <button type="submit">
-        Agregar
-    </button> -->
         </form>
         <div>
             <c:choose>
@@ -108,7 +80,7 @@
                             <c:forEach items="${gol}" var="g">
                                 <tr>
                                     <td>
-                                        ${g.minuto} ${g.contra}
+                                        ${g.minuto}' ${g.golEnContra()}
                                     </td>
                                     <td>
                                         ${g.jugador.dorsal}

@@ -72,8 +72,6 @@ public class Jugador {
         this.email = email;
     }
     
-    
-    
     public int getIdJugador() {
         return this.idJugador;
     }

@@ -24,19 +24,19 @@
                 <label>
                     Jornada:
                 </label>
-                <input type="text" name="txtJornada"/>
+                <input type="text" name="txtJornada" required/>
             </div>
             <div>
                 <label>
                     Fecha:
                 </label>
-                <input type="text" name="txtFecha"/>
+                <input type="text" name="txtFecha" required/>
             </div>
             <div>
                 <label>
                     Hora:
                 </label>
-                <input type="text" name="txtHora"/>
+                <input type="text" name="txtHora" required/>
             </div>
             <div>
                 <label>

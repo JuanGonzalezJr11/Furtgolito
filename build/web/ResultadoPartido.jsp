@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ResultadoPartido
-    Created on : 24 oct. 2021, 13:34:21
+    Document   : ResultadoPartido2
+    Created on : 26 oct. 2021, 10:12:46
     Author     : JuanG
 --%>
 
@@ -60,10 +60,10 @@
                 </label>
             </div>
             <h2>
-                 Detalles del partido   
+                Detalles del partido   
             </h2>
             <h3>
-                 Resultado:   
+                Resultado:   
             </h3>
             <div>
                 <label>
@@ -77,7 +77,6 @@
                 </label>
                 <input type="text" name="txtResultadoEquipoVisitante" id="txtResultadoEquipoVisitante" value="${partido.resultadoEquipoVisitante}" required/>
             </div>
-            <br>
             <div>
                 <label>
                     <b>MVP:</b>
@@ -85,28 +84,26 @@
                 <select name="cboMvp" id="cboMvp">
                     <c:forEach var="m" items="${mvp}">
                         <option value="${m.idJugador}"<c:if test="${m.idJugador == partido.mvp.idJugador}"> selected </c:if>>
-                            ${m.dorsal}. ${m.nombre} ${m.apellido} - ${m.equipo}
+                            ${m.dorsal}. ${m.nombre} ${m.apellido} (${m.posicionJugador}) - ${m.equipo}
                         </option>
                     </c:forEach>
                 </select>
             </div>
-            <h3>
-                Gol/es:
-            </h3>
-            <h3>
-                Tarjetas amarillas:
-            </h3>
-            <div>
-                <button type="button" value="Agregar">
-                    Agregar
-                </button>
-            </div>
-            <h3>
-                Tarjetas rojas:
-            </h3>
-            <button type="submit">
-                Aceptar
-            </button>
+            <c:choose>
+                <c:when test="${partido.estado == false}">
+                    <button type="submit">
+                        Aceptar
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    Ya ha cargado todos los datos de este partido.
+                </c:otherwise>
+            </c:choose>
         </form>
+        <a href="/Furtgolito/ListaPartidos.jsp">
+            <button>
+                Volver
+            </button>
+        </a>
     </body>
 </html>

@@ -18,10 +18,11 @@ public class Gol {
         this.contra = contra;
     }
 
-    public Gol(int idGol, Jugador jugador, int minuto) {
+    public Gol(int idGol, Jugador jugador, int minuto, boolean contra) {
         this.idGol = idGol;
         this.jugador = jugador;
         this.minuto = minuto;
+        this.contra = contra;
     }
 
     // AltaGolServlet
@@ -74,9 +75,9 @@ public class Gol {
     
     public String golEnContra() {
         if (this.contra == false) {
-            return "-";
+            return "";
         } else {
-            return "contra";
+            return "(contra)";
         }
     }
     

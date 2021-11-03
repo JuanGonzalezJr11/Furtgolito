@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.Date;
-
 public class Partido {
     private int idPartido;
     private String fecha;
@@ -15,11 +13,13 @@ public class Partido {
     private int resultadoEquipoLocal;
     private int resultadoEquipoVisitante;
     private boolean estado;
-
+    private Equipo equipoGanador;
+    private Equipo equipoPerdedor;
+    
     public Partido() {
     }
 
-    public Partido(int idPartido, String fecha, String hora, Jugador mvp, Equipo equipoLocal, Equipo equipoVisitante, Arbitro arbitro, Campo campo, int jornada, int resultadoEquipoLocal, int resultadoEquipoVisitante, boolean estado) {
+    public Partido(int idPartido, String fecha, String hora, Jugador mvp, Equipo equipoLocal, Equipo equipoVisitante, Arbitro arbitro, Campo campo, int jornada, int resultadoEquipoLocal, int resultadoEquipoVisitante, boolean estado, Equipo equipoGanador, Equipo equipoPerdedor) {
         this.idPartido = idPartido;
         this.fecha = fecha;
         this.hora = hora;
@@ -32,6 +32,8 @@ public class Partido {
         this.resultadoEquipoLocal = resultadoEquipoLocal;
         this.resultadoEquipoVisitante = resultadoEquipoVisitante;
         this.estado = estado;
+        this.equipoGanador = equipoGanador;
+        this.equipoPerdedor = equipoPerdedor;
     }
 
     public Partido(String fecha, String hora, Equipo equipoLocal, Equipo equipoVisitante, Arbitro arbitro, Campo campo, int jornada) {
@@ -55,12 +57,26 @@ public class Partido {
         this.jornada = jornada;
     }
 
-    // ResultadoPartidoServlet
+    // ResultadoPartidoServlet > resultadoPartidoSinGanador()
     public Partido(int idPartido, Jugador mvp, int resultadoEquipoLocal, int resultadoEquipoVisitante) {
         this.idPartido = idPartido;
         this.mvp = mvp;
         this.resultadoEquipoLocal = resultadoEquipoLocal;
         this.resultadoEquipoVisitante = resultadoEquipoVisitante;
+    }
+    
+    // ResultadoPartidoServlet > resultadoPartido()
+    public Partido(int idPartido, Jugador mvp, int resultadoEquipoLocal, int resultadoEquipoVisitante, Equipo equipoGanador, Equipo equipoPerdedor) {
+        this.idPartido = idPartido;
+        this.mvp = mvp;
+        this.resultadoEquipoLocal = resultadoEquipoLocal;
+        this.resultadoEquipoVisitante = resultadoEquipoVisitante;
+        this.equipoGanador = equipoGanador;
+        this.equipoPerdedor = equipoPerdedor;
+    }
+
+    public Partido(int jornada) {
+        this.jornada = jornada;
     }
     
     public int getIdPartido() {
@@ -157,6 +173,24 @@ public class Partido {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+    
+    // EDICIÓN:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    public Equipo getEquipoGanador() {
+        return equipoGanador;
+    }
+
+    public void setEquipoGanador(Equipo equipoGanador) {
+        this.equipoGanador = equipoGanador;
+    }
+
+    public Equipo getEquipoPerdedor() {
+        return equipoPerdedor;
+    }
+
+    public void setEquipoPerdedor(Equipo equipoPerdedor) {
+        this.equipoPerdedor = equipoPerdedor;
     }
 
     @Override

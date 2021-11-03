@@ -43,14 +43,14 @@
                 <label>
                     Equipo: ${jugador.equipo}
                 </label>
-                <input type="hidden" name="cboEquipo" id="cboEquipo" value="${jugador.equipo.idEquipo}"/>
-                <!-- <select name="cboEquipo" class="form-control" id="cboEquipo">
+                <!-- <input type="hidden" name="cboEquipo" id="cboEquipo" value="${jugador.equipo.idEquipo}"/> -->
+                <select name="cboEquipo" class="form-control" id="cboEquipo">
                     <c:forEach var="e" items="${gestor.equipos}">
                         <option value="${e.idEquipo}" <c:if test="${e.idEquipo == jugador.equipo.idEquipo}"> selected </c:if>>
                             ${e.nombre}
                         </option>
                     </c:forEach>
-                </select> -->
+                </select>
             </div>
             <div>
                 <label>
