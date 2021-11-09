@@ -173,6 +173,25 @@ public class GestorBaseDatos {
     
     // ---------------------------- JUGADOR ------------------------------------
     
+    public int getCantidadJugadores(){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad jugadores' FROM Jugadores");
+            while(rs.next()){
+                int cantidadJugadores = rs.getInt("cantidad jugadores");
+                return cantidad = cantidadJugadores;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
     public void altaJugador(Jugador j){
         try{
             abrirConexion();
@@ -797,6 +816,25 @@ public class GestorBaseDatos {
     
     // ----------------------------- CAMPO -------------------------------------
     
+    public int getCantidadCampos(){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad campos' FROM Campos");
+            while(rs.next()){
+                int cantidadCampos = rs.getInt("cantidad campos");
+                return cantidad = cantidadCampos;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
     public void altaCampo(Campo c){
         try{
             abrirConexion();
@@ -881,6 +919,25 @@ public class GestorBaseDatos {
     }
     
     // ------------------------------ NOVEDAD ----------------------------------
+    
+    public int getCantidadNovedades(){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad' FROM Novedades");
+            while(rs.next()){
+                int cantidadNovedades = rs.getInt("cantidad");
+                return cantidad = cantidadNovedades;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
     
     public void altaNovedad(Novedad n){
         try{
@@ -1521,6 +1578,59 @@ public class GestorBaseDatos {
         try{
             abrirConexion();
             PreparedStatement ps = con.prepareStatement("DELETE FROM TarjetasRojas WHERE idPartido = ?");
+            ps.setInt(1, idPartido);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public ArrayList<Jugador> listaJugadoresSuspendidosPorPartido(int idPartido){
+        ArrayList<Jugador> lista = new ArrayList<>();
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT * \n" +
+                                                        "FROM Jugadores j\n" +
+                                                        "INNER JOIN Partidos p ON j.idEquipo = p.idEquipoLocal OR j.idEquipo = p.idEquipoPerdedor\n" +
+                                                        "WHERE idPartido = ? AND j.suspension = 'true'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int idJugador = rs.getInt("idJugador");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                int edad = rs.getInt("edad");
+                int idPosicionJugador = rs.getInt("idPosicionJugador");
+                PosicionJugador posicionJugador = obtenerPosicionJugador(idPosicionJugador);
+                int dorsal = rs.getInt("dorsal");
+                boolean suspension = rs.getBoolean("suspension");
+                boolean capitan = rs.getBoolean("capitan");
+                String telefono = rs.getString("telefono");
+                String email = rs.getString("email");
+                
+                lista.add(new Jugador(idJugador, nombre, apellido, edad, posicionJugador, dorsal, suspension, capitan, telefono, email));
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return lista;
+    }
+    
+    public void eliminarSuspensiones(int idPartido){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Jugadores SET suspension = 'false' WHERE ";
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idPartido);
             ps.executeUpdate();
         }

@@ -19,31 +19,38 @@
         <h1>
             Listado de campos
         </h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Nombre
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${gestor.listadoCampos}" var="listadoCampos">
-                    <tr>
-                        <td>
-                            ${listadoCampos.nombre}
-                        </td>
-                        <td>
-                            <a href="/Furtgolito/ModificarCampoServlet?idCampo=${listadoCampos.idCampo}">
-                                <button>
-                                    Modificar
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <c:choose>
+            <c:when test="${gestor.cantidadCampos == 0}">
+                No se han cargado campos aún.
+            </c:when>
+            <c:otherwise>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${gestor.listadoCampos}" var="listadoCampos">
+                            <tr>
+                                <td>
+                                    ${listadoCampos.nombre}
+                                </td>
+                                <td>
+                                    <a href="/Furtgolito/ModificarCampoServlet?idCampo=${listadoCampos.idCampo}">
+                                        <button>
+                                            Modificar
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
         <a href="/Furtgolito/AltaCampoServlet">
             <button>
                 Nuevo campo

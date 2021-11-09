@@ -19,44 +19,51 @@
         <h1>
             Listado de novedades
         </h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Título
-                    </th>
-                    <th>
-                        Descripción
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${gestor.listadoNovedades}" var="listadoNovedades">
-                    <tr>
-                        <td>
-                            ${listadoNovedades.titulo}
-                        </td>
-                        <td>
-                            ${listadoNovedades.descripcion}
-                        </td>
-                        <td>
-                            <a href="/Furtgolito/ModificarNovedadServlet?idNovedad=${listadoNovedades.idNovedad}">
-                                <button>
-                                    Modificar
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/Furtgolito/EliminarNovedadServlet?idNovedad=${listadoNovedades.idNovedad}">
-                                <button>
-                                    Eliminar
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <c:choose>
+            <c:when test="${gestor.cantidadNovedades == 0}">
+                No se ha cargado ninguna novedad aún.
+            </c:when>
+            <c:otherwise>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Título
+                            </th>
+                            <th>
+                                Descripción
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${gestor.listadoNovedades}" var="listadoNovedades">
+                            <tr>
+                                <td>
+                                    ${listadoNovedades.titulo}
+                                </td>
+                                <td>
+                                    ${listadoNovedades.descripcion}
+                                </td>
+                                <td>
+                                    <a href="/Furtgolito/ModificarNovedadServlet?idNovedad=${listadoNovedades.idNovedad}">
+                                        <button>
+                                            Modificar
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/Furtgolito/EliminarNovedadServlet?idNovedad=${listadoNovedades.idNovedad}">
+                                        <button>
+                                            Eliminar
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
         <a href="/Furtgolito/AltaNovedadServlet">
             <button>
                 Nueva novedad

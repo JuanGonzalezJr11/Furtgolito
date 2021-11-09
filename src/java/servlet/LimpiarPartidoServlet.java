@@ -8,6 +8,7 @@ package servlet;
 import controlador.GestorBaseDatos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,9 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Equipo;
-import modelo.Gol;
+import modelo.Jugador;
 import modelo.Partido;
-import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -44,10 +44,14 @@ public class LimpiarPartidoServlet extends HttpServlet {
             GestorBaseDatos g = new GestorBaseDatos();
             g.eliminarTarjetasAmarillasPorPartido(idPartido);
             g.eliminarTarjetasRojasPorPartido(idPartido);
+            ArrayList<Jugador> ljs = g.listaJugadoresSuspendidosPorPartido(idPartido);
+            for (Jugador lj : ljs) {
+                int opcion = 1;
+                g.jugadorSuspendido(lj.getIdJugador(), opcion);
+            }
             Partido p = new Partido();
             p = g.obtenerPartidoPorId(idPartido);
             Equipo equipoGanador = p.getEquipoGanador();
-            //EDICION:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             Equipo equipoPerdedor = p.getEquipoPerdedor();
             int cantidadGolesPorPartidoEquipoGanador = g.cantidadGolesPorPartidoEquipoGanador(idPartido);
             int cantidadGolesContraPorPartidoEquipoGanador = g.cantidadGolesContraPorPartidoEquipoGanador(idPartido);
@@ -57,12 +61,10 @@ public class LimpiarPartidoServlet extends HttpServlet {
             int cantidadGolesContraPorPartidoEquipoLocal = g.cantidadGolesContraPorPartidoEquipoLocal(idPartido);
             int cantidadGolesPorPartidoEquipoVisitante = g.cantidadGolesPorPartidoEquipoVisitante(idPartido);
             int cantidadGolesContraPorPartidoEquipoVisitante = g.cantidadGolesContraPorPartidoEquipoVisitante(idPartido);
-            //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             if(equipoGanador != null){
                 int puntosEquipoGanador = equipoGanador.getPuntos();
                 int puntosNuevosEquipoGanador = puntosEquipoGanador - 3;
                 g.asignarPuntos(equipoGanador.getIdEquipo(), puntosNuevosEquipoGanador);
-                //EDICION:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                 int partidosJugadosGanador = equipoGanador.getPartidosJugados();
                 int nuevoPartidosJugadosGanador = partidosJugadosGanador - 1;
                 g.partidoJugado(equipoGanador.getIdEquipo(), nuevoPartidosJugadosGanador);
@@ -75,8 +77,6 @@ public class LimpiarPartidoServlet extends HttpServlet {
                 int partidosPerdidosPerdedor = equipoPerdedor.getPartidosPerdidos();
                 int nuevoPartidosPerdidosPerdedor = partidosPerdidosPerdedor - 1;
                 g.partidoPerdido(equipoPerdedor.getIdEquipo(), nuevoPartidosPerdidosPerdedor);
-                
-                
                 int golesFavorGanador = equipoGanador.getGolesFavor();
                 int nuevoGolesFavorGanador = golesFavorGanador - (cantidadGolesPorPartidoEquipoGanador + cantidadGolesContraPorPartidoEquipoPerdedor);
                 g.golesFavor(equipoGanador.getIdEquipo(), nuevoGolesFavorGanador);
@@ -91,7 +91,6 @@ public class LimpiarPartidoServlet extends HttpServlet {
                 g.golesFavor(equipoPerdedor.getIdEquipo(), nuevoGolesFavorPerdedor);
                 g.diferenciaGoles(equipoGanador.getIdEquipo());
                 g.diferenciaGoles(equipoPerdedor.getIdEquipo());
-                //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             }
             if(equipoGanador == null && p.getEquipoLocal().getPuntos() != 0 && p.getEquipoVisitante().getPuntos() != 0){
                 int puntosEquipoLocal = p.getEquipoLocal().getPuntos();
@@ -100,7 +99,6 @@ public class LimpiarPartidoServlet extends HttpServlet {
                 int puntosNuevosEquipoVisitante = puntosEquipoVisitante - 1;
                 g.asignarPuntos(p.getEquipoLocal().getIdEquipo(), puntosNuevosEquipoLocal);
                 g.asignarPuntos(p.getEquipoVisitante().getIdEquipo(), puntosNuevosEquipoVisitante);
-                //EDICION:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                 int partidosJugadosLocal = p.getEquipoLocal().getPartidosJugados();
                 int nuevoPartidosJugadosLocal = partidosJugadosLocal - 1;
                 g.partidoJugado(p.getEquipoLocal().getIdEquipo(), nuevoPartidosJugadosLocal);
@@ -113,8 +111,6 @@ public class LimpiarPartidoServlet extends HttpServlet {
                 int partidosEmpatadosVisitante = p.getEquipoVisitante().getPartidosEmpatados();
                 int nuevoPartidosEmpatadosVisitante = partidosEmpatadosVisitante - 1;
                 g.partidoEmpatado(p.getEquipoVisitante().getIdEquipo(), nuevoPartidosEmpatadosVisitante);
-                
-                
                 int golesFavorLocal = p.getEquipoLocal().getGolesFavor();
                 int nuevoGolesFavorLocal = golesFavorLocal - (cantidadGolesPorPartidoEquipoLocal + cantidadGolesContraPorPartidoEquipoVisitante);
                 g.golesFavor(p.getEquipoLocal().getIdEquipo(), nuevoGolesFavorLocal);
@@ -129,7 +125,6 @@ public class LimpiarPartidoServlet extends HttpServlet {
                 g.golesFavor(p.getEquipoVisitante().getIdEquipo(), nuevoGolesFavorVisitante);
                 g.diferenciaGoles(p.getEquipoLocal().getIdEquipo());
                 g.diferenciaGoles(p.getEquipoVisitante().getIdEquipo());
-                //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             }
             g.eliminarGolesPorPartido(idPartido);
             g.eliminarResultadoPartidoPorPartido(idPartido);
