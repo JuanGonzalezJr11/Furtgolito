@@ -5,22 +5,21 @@
  */
 package servlet;
 
-import controlador.GestorBaseDatos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.TarjetaRoja;
 
 /**
  *
  * @author JuanG
  */
-@WebServlet(name = "EliminarTarjetaRojaServlet", urlPatterns = {"/EliminarTarjetaRojaServlet"})
-public class EliminarTarjetaRojaServlet extends HttpServlet {
+@WebServlet(name = "CierreSesionServlet", urlPatterns = {"/CierreSesionServlet"})
+public class CierreSesionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,18 +32,10 @@ public class EliminarTarjetaRojaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String idPartido = request.getParameter("idPartido");
-            String borrarIdTarjetaRoja = (String) request.getParameter("idTarjetaRoja");
-            int idTarjetaRoja = Integer.parseInt(borrarIdTarjetaRoja);
-            GestorBaseDatos g = new GestorBaseDatos();
-            TarjetaRoja tr = g.obtenerTarjetaRojaPorId(idTarjetaRoja);
-            int opcion = 1;
-            g.jugadorSuspendido(tr.getJugador().getIdJugador(), opcion);
-            g.eliminarTarjetaRoja(idTarjetaRoja);
-            response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
-        }
+        request.getSession().setAttribute("usuario", null);
+        
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/Principal.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

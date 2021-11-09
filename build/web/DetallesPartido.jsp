@@ -107,7 +107,7 @@
                         </th>
                         <td>
                             <c:choose>
-                                <c:when test="${partido.estado == false}">
+                                <c:when test="${partido.mvp == null}">
                                     -
                                 </c:when>
                                 <c:otherwise>

@@ -33,13 +33,15 @@
                         <td>
                             ${listadoEquipos.nombre}
                         </td>
-                        <td>
-                            <a href="/Furtgolito/ModificarEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
-                                <button>
-                                    Modificar
-                                </button>
-                            </a>
-                        </td>
+                        <c:if test="${!empty usuario}">
+                            <td>
+                                <a href="/Furtgolito/ModificarEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
+                                    <button>
+                                        Modificar
+                                    </button>
+                                </a>
+                            </td>
+                        </c:if>
                         <td>
                             <a href="/Furtgolito/VerEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
                                 <button>
@@ -51,10 +53,12 @@
                 </c:forEach>
             </tbody>
         </table>
-        <a href="/Furtgolito/AltaEquipoServlet">
-            <button>
-                Nuevo equipo
-            </button>
-        </a>
+        <c:if test="${!empty usuario}">
+            <a href="/Furtgolito/AltaEquipoServlet">
+                <button>
+                    Nuevo equipo
+                </button>
+            </a>
+        </c:if>
     </body>
 </html>

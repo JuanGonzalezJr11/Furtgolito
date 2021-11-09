@@ -13,14 +13,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.TarjetaRoja;
+import modelo.Jugador;
+import modelo.Partido;
 
 /**
  *
  * @author JuanG
  */
-@WebServlet(name = "EliminarTarjetaRojaServlet", urlPatterns = {"/EliminarTarjetaRojaServlet"})
-public class EliminarTarjetaRojaServlet extends HttpServlet {
+@WebServlet(name = "AsignarMvpServlet", urlPatterns = {"/AsignarMvpServlet"})
+public class AsignarMvpServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,15 +36,16 @@ public class EliminarTarjetaRojaServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String idPartido = request.getParameter("idPartido");
-            String borrarIdTarjetaRoja = (String) request.getParameter("idTarjetaRoja");
-            int idTarjetaRoja = Integer.parseInt(borrarIdTarjetaRoja);
-            GestorBaseDatos g = new GestorBaseDatos();
-            TarjetaRoja tr = g.obtenerTarjetaRojaPorId(idTarjetaRoja);
-            int opcion = 1;
-            g.jugadorSuspendido(tr.getJugador().getIdJugador(), opcion);
-            g.eliminarTarjetaRoja(idTarjetaRoja);
-            response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AsignarMvpServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AsignarMvpServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -73,7 +75,12 @@ public class EliminarTarjetaRojaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        GestorBaseDatos g = new GestorBaseDatos();
+        int idPartido = Integer.parseInt((String) request.getParameter("txtIdPartido"));
+        String idMvp = request.getParameter("cboMvp");
+        Jugador mvp = g.obtenerMvp(Integer.parseInt(idMvp));
+        g.resultadoPartidoMvp(new Partido(idPartido, mvp));
+        response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
     }
 
     /**

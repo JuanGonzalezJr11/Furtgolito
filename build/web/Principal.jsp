@@ -14,10 +14,22 @@
         <title>Furtgolito - Inicio</title>
     </head>
     <body>
+        <c:choose>
+            <c:when test="${!empty usuario}">
+                <a href="/Furtgolito/CierreSesionServlet">
+                    Cerrar sesión
+                </a>
+                <%= " ¡Hola " + request.getSession().getAttribute("usuario") + "! "%>
+            </c:when>
+            <c:otherwise>
+                <a href="/Furtgolito/InicioSesionServlet">
+                    Iniciar sesión
+                </a>
+            </c:otherwise>
+        </c:choose>
         <h1>¡Bienvenidos a Furtgolito!</h1>
         <%@include file = "Navbar.jsp" %>
         <div>
-            HACER QUE LOS EQUIPOS SE CREEN CON PUNTAJE DE 0.
             <h2>
                 Posiciones
             </h2>
@@ -56,36 +68,43 @@
             <h2>
                 Goleadores
             </h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            Nombre
-                        </th>
-                        <th>
-                            Equipo
-                        </th>
-                        <th>
-                            Goles
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${gestor.tablaGoleadoresTOP3}" var="g">
-                        <tr>
-                            <td>
-                                ${g.nombre} ${g.apellido}
-                            </td>
-                            <td>
-                                ${g.nombreEquipo}
-                            </td>
-                            <td>
-                                ${g.cantidadGoles}
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+            <c:choose>
+                <c:when test="${gestor.cantidadGolesTotales == 0}">
+                    No hay registro de goleadores aún.
+                </c:when>
+                <c:otherwise>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Equipo
+                                </th>
+                                <th>
+                                    Goles
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${gestor.tablaGoleadoresTOP3}" var="g">
+                                <tr>
+                                    <td>
+                                        ${g.nombre} ${g.apellido}
+                                    </td>
+                                    <td>
+                                        ${g.nombreEquipo}
+                                    </td>
+                                    <td>
+                                        ${g.cantidadGoles}
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div>
             <h2>

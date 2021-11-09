@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.Jugador;
 import modelo.Partido;
 import modelo.TarjetaAmarilla;
+import modelo.TarjetaRoja;
 
 /**
  *
@@ -74,7 +75,6 @@ public class AltaTarjetaAmarillaServlet extends HttpServlet {
         request.setAttribute("jugador", j);
         ArrayList<TarjetaAmarilla> ta = g.listaTarjetasAmarillasPorPartido(partido);
         request.setAttribute("tarjetaAmarilla", ta);
-        //
         int cantidadTarjetasAmarillas = g.cantidadTarjetasAmarillas(partido);
         request.setAttribute("cantidadTarjetasAmarillas", cantidadTarjetasAmarillas);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/AltaTarjetaAmarilla.jsp");
@@ -98,8 +98,17 @@ public class AltaTarjetaAmarillaServlet extends HttpServlet {
         int minuto = Integer.parseInt((String) request.getParameter("txtMinuto"));
         String idPartido = request.getParameter("txtIdPartido");
         Partido partido = g.obtenerPartidoPorId(Integer.parseInt(idPartido));
+        ArrayList<TarjetaAmarilla> lta = g.listaTarjetasAmarillasPorPartido(partido.getIdPartido());
+        for (TarjetaAmarilla tarjetaAmarilla : lta) {
+            if(tarjetaAmarilla.getJugador().getIdJugador() == jugador.getIdJugador()){
+                String motivo = "Doble tarjeta amarilla.";
+                g.altaTarjetaRoja(new TarjetaRoja(jugador, minuto, partido, motivo));
+                int opcion = 0;
+                g.jugadorSuspendido(jugador.getIdJugador(), opcion);
+            }
+        }
         g.altaTarjetaAmarilla(new TarjetaAmarilla(jugador, minuto, partido));
-        response.sendRedirect("/Furtgolito/AltaTarjetaAmarillaServlet?idPartido="+idPartido);
+        response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
     }
 
     /**

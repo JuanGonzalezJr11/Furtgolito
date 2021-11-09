@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Equipo;
 import modelo.Gol;
 import modelo.Jugador;
 import modelo.Partido;
@@ -101,7 +102,41 @@ public class AltaGolServlet extends HttpServlet {
         Partido partido = g.obtenerPartidoPorId(Integer.parseInt(idPartido));
         boolean contra = Boolean.parseBoolean(request.getParameter("chkContra"));
         g.altaGol(new Gol(jugador, minuto, partido, contra));
-        response.sendRedirect("/Furtgolito/AltaGolServlet?idPartido="+idPartido);
+        //EDICION:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        
+        Equipo equipoLocal = partido.getEquipoLocal();
+        Equipo equipoVisitante = partido.getEquipoVisitante();
+        if(jugador.getEquipo().getIdEquipo() == equipoLocal.getIdEquipo() && contra == false || jugador.getEquipo().getIdEquipo() == equipoVisitante.getIdEquipo() && contra == true){
+            int golesFavorLocal = equipoLocal.getGolesFavor();
+            int nuevoGolesFavorLocal = golesFavorLocal + 1;
+            g.golesFavor(equipoLocal.getIdEquipo(), nuevoGolesFavorLocal);
+            int golesContraVisitante = equipoVisitante.getGolesContra();
+            int nuevoGolesContraVisitante = golesContraVisitante +1;
+            g.golesContra(equipoVisitante.getIdEquipo(), nuevoGolesContraVisitante);
+            g.diferenciaGoles(equipoLocal.getIdEquipo());
+            g.diferenciaGoles(equipoVisitante.getIdEquipo());
+            /*int diferenciaGolesLocal = nuevoGolesFavorLocal - equipoLocal.getGolesContra();
+            g.diferenciaGoles(equipoLocal.getIdEquipo(), diferenciaGolesLocal);
+            int diferenciaGolesVisitante = equipoVisitante.getGolesFavor() - nuevoGolesContraVisitante;
+            g.diferenciaGoles(equipoVisitante.getIdEquipo(), diferenciaGolesVisitante);*/
+        }
+        if(jugador.getEquipo().getIdEquipo() == equipoVisitante.getIdEquipo() && contra == false || jugador.getEquipo().getIdEquipo() == equipoLocal.getIdEquipo() && contra == true){
+            int golesFavorVisitante = equipoVisitante.getGolesFavor();
+            int nuevoGolesFavorVisitante = golesFavorVisitante + 1;
+            g.golesFavor(equipoVisitante.getIdEquipo(), nuevoGolesFavorVisitante);
+            int golesContraLocal = equipoLocal.getGolesContra();
+            int nuevoGolesContraLocal = golesContraLocal +1;
+            g.golesContra(equipoLocal.getIdEquipo(), nuevoGolesContraLocal);
+            g.diferenciaGoles(equipoVisitante.getIdEquipo());
+            g.diferenciaGoles(equipoLocal.getIdEquipo());
+            /*int diferenciaGolesVisitante = nuevoGolesFavorVisitante - equipoVisitante.getGolesContra();
+            g.diferenciaGoles(equipoVisitante.getIdEquipo(), diferenciaGolesVisitante);
+            int diferenciaGolesLocal = equipoLocal.getGolesFavor() - nuevoGolesContraLocal;
+            g.diferenciaGoles(equipoLocal.getIdEquipo(), diferenciaGolesLocal);*/
+        }
+        //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        //response.sendRedirect("/Furtgolito/AltaGolServlet?idPartido="+idPartido);
+        response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
     }
 
     /**

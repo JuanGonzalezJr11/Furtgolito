@@ -16,11 +16,13 @@
     <body>
         <%@include file = "Navbar.jsp" %>
         <br>
-        <a href="/Furtgolito/AltaJugadorServlet">
-            <button>
-                Nuevo jugador
-            </button>
-        </a>
+        <c:if test="${!empty usuario}">
+            <a href="/Furtgolito/AltaJugadorServlet">
+                <button>
+                    Nuevo jugador
+                </button>
+            </a>
+        </c:if>
         <h1>
             Listado de jugadores
         </h1>
@@ -91,29 +93,31 @@
                                 <td>
                                     ${listadoJugadores.estaSuspendido()}
                                 </td>
-                                <td>
-                                    <c:if test="${listadoJugadores.suspension == true}">
-                                        <a href="/Furtgolito/QuitarSuspensionJugadorServlet?idJugador=${listadoJugadores.idJugador}">
+                                <c:if test="${!empty usuario}">
+                                    <td>
+                                        <c:if test="${listadoJugadores.suspension == true}">
+                                            <a href="/Furtgolito/QuitarSuspensionJugadorServlet?idJugador=${listadoJugadores.idJugador}">
+                                                <button>
+                                                    Quitar suspensión
+                                                </button>
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${listadoJugadores.suspension == false}">
+                                            <a href="/Furtgolito/SuspenderJugadorServlet?idJugador=${listadoJugadores.idJugador}">
+                                                <button>
+                                                    Añadir suspensión
+                                                </button>
+                                            </a>
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <a href="/Furtgolito/ModificarJugadorServlet?idJugador=${listadoJugadores.idJugador}">
                                             <button>
-                                                Quitar suspensión
+                                                Modificar
                                             </button>
                                         </a>
-                                    </c:if>
-                                    <c:if test="${listadoJugadores.suspension == false}">
-                                        <a href="/Furtgolito/SuspenderJugadorServlet?idJugador=${listadoJugadores.idJugador}">
-                                            <button>
-                                                Añadir suspensión
-                                            </button>
-                                        </a>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <a href="/Furtgolito/ModificarJugadorServlet?idJugador=${listadoJugadores.idJugador}">
-                                        <button>
-                                            Modificar
-                                        </button>
-                                    </a>
-                                </td>
+                                    </td> 
+                                </c:if>
                             </tr>
                         </c:if>
                     </c:forEach>

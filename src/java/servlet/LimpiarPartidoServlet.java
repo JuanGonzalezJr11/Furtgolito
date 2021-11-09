@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Equipo;
+import modelo.Gol;
 import modelo.Partido;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -40,16 +42,56 @@ public class LimpiarPartidoServlet extends HttpServlet {
             String limpiarIdPartido = request.getParameter("idPartido");
             int idPartido = Integer.parseInt(limpiarIdPartido);
             GestorBaseDatos g = new GestorBaseDatos();
-            g.eliminarGolesPorPartido(idPartido);
             g.eliminarTarjetasAmarillasPorPartido(idPartido);
             g.eliminarTarjetasRojasPorPartido(idPartido);
             Partido p = new Partido();
             p = g.obtenerPartidoPorId(idPartido);
             Equipo equipoGanador = p.getEquipoGanador();
+            //EDICION:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            Equipo equipoPerdedor = p.getEquipoPerdedor();
+            int cantidadGolesPorPartidoEquipoGanador = g.cantidadGolesPorPartidoEquipoGanador(idPartido);
+            int cantidadGolesContraPorPartidoEquipoGanador = g.cantidadGolesContraPorPartidoEquipoGanador(idPartido);
+            int cantidadGolesPorPartidoEquipoPerdedor = g.cantidadGolesPorPartidoEquipoPerdedor(idPartido);
+            int cantidadGolesContraPorPartidoEquipoPerdedor = g.cantidadGolesContraPorPartidoEquipoPerdedor(idPartido);
+            int cantidadGolesPorPartidoEquipoLocal = g.cantidadGolesPorPartidoEquipoLocal(idPartido);
+            int cantidadGolesContraPorPartidoEquipoLocal = g.cantidadGolesContraPorPartidoEquipoLocal(idPartido);
+            int cantidadGolesPorPartidoEquipoVisitante = g.cantidadGolesPorPartidoEquipoVisitante(idPartido);
+            int cantidadGolesContraPorPartidoEquipoVisitante = g.cantidadGolesContraPorPartidoEquipoVisitante(idPartido);
+            //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             if(equipoGanador != null){
                 int puntosEquipoGanador = equipoGanador.getPuntos();
                 int puntosNuevosEquipoGanador = puntosEquipoGanador - 3;
                 g.asignarPuntos(equipoGanador.getIdEquipo(), puntosNuevosEquipoGanador);
+                //EDICION:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                int partidosJugadosGanador = equipoGanador.getPartidosJugados();
+                int nuevoPartidosJugadosGanador = partidosJugadosGanador - 1;
+                g.partidoJugado(equipoGanador.getIdEquipo(), nuevoPartidosJugadosGanador);
+                int partidosGanadosGanador = equipoGanador.getPartidosGanados();
+                int nuevoPartidosGanadosGanador = partidosGanadosGanador - 1;
+                g.partidoGanado(equipoGanador.getIdEquipo(), nuevoPartidosGanadosGanador);
+                int partidosJugadosPerdedor = equipoPerdedor.getPartidosJugados();
+                int nuevoPartidosJugadosPerdedor = partidosJugadosPerdedor - 1;
+                g.partidoJugado(equipoPerdedor.getIdEquipo(), nuevoPartidosJugadosPerdedor);
+                int partidosPerdidosPerdedor = equipoPerdedor.getPartidosPerdidos();
+                int nuevoPartidosPerdidosPerdedor = partidosPerdidosPerdedor - 1;
+                g.partidoPerdido(equipoPerdedor.getIdEquipo(), nuevoPartidosPerdidosPerdedor);
+                
+                
+                int golesFavorGanador = equipoGanador.getGolesFavor();
+                int nuevoGolesFavorGanador = golesFavorGanador - (cantidadGolesPorPartidoEquipoGanador + cantidadGolesContraPorPartidoEquipoPerdedor);
+                g.golesFavor(equipoGanador.getIdEquipo(), nuevoGolesFavorGanador);
+                int golesContraGanador = equipoGanador.getGolesContra();
+                int nuevoGolesContraGanador = golesContraGanador - (cantidadGolesPorPartidoEquipoPerdedor + cantidadGolesContraPorPartidoEquipoGanador);
+                g.golesContra(equipoGanador.getIdEquipo(), nuevoGolesContraGanador);
+                int golesContraPerdedor = equipoPerdedor.getGolesContra();
+                int nuevoGolesContraPerdedor = golesContraPerdedor - (cantidadGolesPorPartidoEquipoGanador + cantidadGolesContraPorPartidoEquipoPerdedor);
+                g.golesContra(equipoPerdedor.getIdEquipo(), nuevoGolesContraPerdedor);
+                int golesFavorPerdedor = equipoPerdedor.getGolesFavor();
+                int nuevoGolesFavorPerdedor = golesFavorPerdedor - (cantidadGolesPorPartidoEquipoPerdedor + cantidadGolesContraPorPartidoEquipoGanador);
+                g.golesFavor(equipoPerdedor.getIdEquipo(), nuevoGolesFavorPerdedor);
+                g.diferenciaGoles(equipoGanador.getIdEquipo());
+                g.diferenciaGoles(equipoPerdedor.getIdEquipo());
+                //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             }
             if(equipoGanador == null && p.getEquipoLocal().getPuntos() != 0 && p.getEquipoVisitante().getPuntos() != 0){
                 int puntosEquipoLocal = p.getEquipoLocal().getPuntos();
@@ -58,7 +100,38 @@ public class LimpiarPartidoServlet extends HttpServlet {
                 int puntosNuevosEquipoVisitante = puntosEquipoVisitante - 1;
                 g.asignarPuntos(p.getEquipoLocal().getIdEquipo(), puntosNuevosEquipoLocal);
                 g.asignarPuntos(p.getEquipoVisitante().getIdEquipo(), puntosNuevosEquipoVisitante);
+                //EDICION:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                int partidosJugadosLocal = p.getEquipoLocal().getPartidosJugados();
+                int nuevoPartidosJugadosLocal = partidosJugadosLocal - 1;
+                g.partidoJugado(p.getEquipoLocal().getIdEquipo(), nuevoPartidosJugadosLocal);
+                int partidosJugadosVisitante = p.getEquipoVisitante().getPartidosJugados();
+                int nuevoPartidosJugadosVisitante = partidosJugadosVisitante - 1;
+                g.partidoJugado(p.getEquipoVisitante().getIdEquipo(), nuevoPartidosJugadosVisitante);
+                int partidosEmpatadosLocal = p.getEquipoLocal().getPartidosEmpatados();
+                int nuevoPartidosEmpatadosLocal = partidosEmpatadosLocal - 1;
+                g.partidoEmpatado(p.getEquipoLocal().getIdEquipo(), nuevoPartidosEmpatadosLocal);
+                int partidosEmpatadosVisitante = p.getEquipoVisitante().getPartidosEmpatados();
+                int nuevoPartidosEmpatadosVisitante = partidosEmpatadosVisitante - 1;
+                g.partidoEmpatado(p.getEquipoVisitante().getIdEquipo(), nuevoPartidosEmpatadosVisitante);
+                
+                
+                int golesFavorLocal = p.getEquipoLocal().getGolesFavor();
+                int nuevoGolesFavorLocal = golesFavorLocal - (cantidadGolesPorPartidoEquipoLocal + cantidadGolesContraPorPartidoEquipoVisitante);
+                g.golesFavor(p.getEquipoLocal().getIdEquipo(), nuevoGolesFavorLocal);
+                int golesContraLocal = p.getEquipoLocal().getGolesContra();
+                int nuevoGolesContraLocal = golesContraLocal - (cantidadGolesPorPartidoEquipoVisitante + cantidadGolesContraPorPartidoEquipoLocal);
+                g.golesContra(p.getEquipoLocal().getIdEquipo(), nuevoGolesContraLocal);
+                int golesContraVisitante = p.getEquipoVisitante().getGolesContra();
+                int nuevoGolesContraVisitante = golesContraVisitante - (cantidadGolesPorPartidoEquipoLocal + cantidadGolesContraPorPartidoEquipoVisitante);
+                g.golesContra(p.getEquipoVisitante().getIdEquipo(), nuevoGolesContraVisitante);
+                int golesFavorVisitante = p.getEquipoVisitante().getGolesFavor();
+                int nuevoGolesFavorVisitante = golesFavorVisitante - (cantidadGolesPorPartidoEquipoVisitante + cantidadGolesContraPorPartidoEquipoLocal);
+                g.golesFavor(p.getEquipoVisitante().getIdEquipo(), nuevoGolesFavorVisitante);
+                g.diferenciaGoles(p.getEquipoLocal().getIdEquipo());
+                g.diferenciaGoles(p.getEquipoVisitante().getIdEquipo());
+                //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             }
+            g.eliminarGolesPorPartido(idPartido);
             g.eliminarResultadoPartidoPorPartido(idPartido);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListaPartidos.jsp");
             rd.forward(request, response);

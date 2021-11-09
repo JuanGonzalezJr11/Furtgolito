@@ -76,7 +76,7 @@
                             <c:forEach items="${tarjetaRoja}" var="tr">
                                 <tr>
                                     <td>
-                                        ${tr.minuto}
+                                        ${tr.minuto}'
                                     </td>
                                     <td>
                                         ${tr.jugador.dorsal}

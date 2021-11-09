@@ -8,12 +8,15 @@ package servlet;
 import controlador.GestorBaseDatos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Partido;
+import modelo.TarjetaAmarilla;
+import modelo.TarjetaRoja;
 
 /**
  *
@@ -39,8 +42,17 @@ public class EliminarTarjetaAmarillaServlet extends HttpServlet {
             String borrarIdTarjetaAmarilla = (String) request.getParameter("idTarjetaAmarilla");
             int idTarjetaAmarilla = Integer.parseInt(borrarIdTarjetaAmarilla);
             GestorBaseDatos g = new GestorBaseDatos();
+            TarjetaAmarilla ta = g.obtenerTarjetaAmarillaPorId(idTarjetaAmarilla);
+            ArrayList<TarjetaRoja> ltr = g.listaTarjetasRojasPorPartido(Integer.parseInt(idPartido));
+            for (TarjetaRoja tarjetaRoja : ltr) {
+                if (ta.getJugador().getIdJugador() == tarjetaRoja.getJugador().getIdJugador() && tarjetaRoja.getMotivo().equals("Doble tarjeta amarilla.")) {
+                    int opcion = 1;
+                    g.jugadorSuspendido(tarjetaRoja.getJugador().getIdJugador(), opcion);
+                    g.eliminarTarjetaRoja(tarjetaRoja.getIdTarjetaRoja());
+                }
+            }
             g.eliminarTarjetaAmarilla(idTarjetaAmarilla);
-            response.sendRedirect("/Furtgolito/AltaTarjetaAmarillaServlet?idPartido="+idPartido);
+            response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido=" + idPartido);
         }
     }
 

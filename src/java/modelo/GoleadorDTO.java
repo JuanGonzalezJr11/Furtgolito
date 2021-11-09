@@ -49,7 +49,7 @@ public class GoleadorDTO {
     public void setCantidadGoles(int cantidadGoles) {
         this.cantidadGoles = cantidadGoles;
     }
-
+    
     @Override
     public String toString() {
         return "GoleadorDTO{" + "nombre=" + nombre + ", apellido=" + apellido + ", nombreEquipo=" + nombreEquipo + ", cantidadGoles=" + cantidadGoles + '}';

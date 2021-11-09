@@ -5,6 +5,13 @@ public class EquipoDTO {
     private String nombre;
     private int puntos;
     private int posicion;
+    private int partidosJugados;
+    private int partidosGanados;
+    private int partidosEmpatados;
+    private int partidosPerdidos;
+    private int golesFavor;
+    private int golesContra;
+    private int diferenciaGoles;
 
     public EquipoDTO(int idEquipo, String nombre, int puntos, int posicion) {
         this.idEquipo = idEquipo;
@@ -18,7 +25,7 @@ public class EquipoDTO {
         this.puntos = puntos;
         this.posicion = posicion;
     }
-
+    
     public int getIdEquipo() {
         return idEquipo;
     }

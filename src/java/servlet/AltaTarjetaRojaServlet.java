@@ -98,8 +98,11 @@ public class AltaTarjetaRojaServlet extends HttpServlet {
         String idPartido = request.getParameter("txtIdPartido");
         Partido partido = g.obtenerPartidoPorId(Integer.parseInt(idPartido));
         String motivo = request.getParameter("txtMotivo");
+        g.jugadorSuspendido(jugador.getIdJugador(), 0);
         g.altaTarjetaRoja(new TarjetaRoja(jugador, minuto, partido, motivo));
-        response.sendRedirect("/Furtgolito/AltaTarjetaRojaServlet?idPartido="+idPartido);
+        int opcion = 0;
+        g.jugadorSuspendido(jugador.getIdJugador(), opcion);
+        response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
     }
 
     /**

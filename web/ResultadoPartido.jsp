@@ -77,18 +77,6 @@
                 </label>
                 <input type="text" name="txtResultadoEquipoVisitante" id="txtResultadoEquipoVisitante" value="${partido.resultadoEquipoVisitante}" required/>
             </div>
-            <div>
-                <label>
-                    <b>MVP:</b>
-                </label>
-                <select name="cboMvp" id="cboMvp">
-                    <c:forEach var="m" items="${mvp}">
-                        <option value="${m.idJugador}"<c:if test="${m.idJugador == partido.mvp.idJugador}"> selected </c:if>>
-                            ${m.dorsal}. ${m.nombre} ${m.apellido} (${m.posicionJugador}) - ${m.equipo}
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
             <c:choose>
                 <c:when test="${partido.estado == false}">
                     <button type="submit">

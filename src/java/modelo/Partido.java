@@ -58,21 +58,25 @@ public class Partido {
     }
 
     // ResultadoPartidoServlet > resultadoPartidoSinGanador()
-    public Partido(int idPartido, Jugador mvp, int resultadoEquipoLocal, int resultadoEquipoVisitante) {
+    public Partido(int idPartido, int resultadoEquipoLocal, int resultadoEquipoVisitante) {
         this.idPartido = idPartido;
-        this.mvp = mvp;
         this.resultadoEquipoLocal = resultadoEquipoLocal;
         this.resultadoEquipoVisitante = resultadoEquipoVisitante;
     }
     
     // ResultadoPartidoServlet > resultadoPartido()
-    public Partido(int idPartido, Jugador mvp, int resultadoEquipoLocal, int resultadoEquipoVisitante, Equipo equipoGanador, Equipo equipoPerdedor) {
+    public Partido(int idPartido, int resultadoEquipoLocal, int resultadoEquipoVisitante, Equipo equipoGanador, Equipo equipoPerdedor) {
         this.idPartido = idPartido;
-        this.mvp = mvp;
         this.resultadoEquipoLocal = resultadoEquipoLocal;
         this.resultadoEquipoVisitante = resultadoEquipoVisitante;
         this.equipoGanador = equipoGanador;
         this.equipoPerdedor = equipoPerdedor;
+    }
+    
+    // AsignarMvpServlet
+    public Partido(int idPartido, Jugador mvp) {
+        this.idPartido = idPartido;
+        this.mvp = mvp;
     }
 
     public Partido(int jornada) {

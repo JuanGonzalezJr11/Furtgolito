@@ -16,12 +16,14 @@
     <body>
         <%@include file = "Navbar.jsp" %>
         <br>
-        <a href="/Furtgolito/AltaPartidoServlet">
-            <button>
-                Nuevo partido
-            </button>
-        </a>
-        <br>
+        <c:if test="${!empty usuario}">
+            <a href="/Furtgolito/AltaPartidoServlet">
+                <button>
+                    Nuevo partido
+                </button>
+            </a>
+            <br>
+        </c:if>
         <h1>
             Jornadas y partidos
         </h1>
@@ -95,68 +97,56 @@
                                         </button>
                                     </a>
                                 </td>
-                                <td>
-                                    <a href="/Furtgolito/ModificarPartidoServlet?idPartido=${lp.idPartido}">
-                                        <button>
-                                            Modificar
-                                        </button>
-                                    </a>
-                                </td>
-                                <c:choose>
-                                    <c:when test="${lp.estado == false}">
-                                        <td>
-                                            <a href="/Furtgolito/EliminarPartidoServlet?idPartido=${lp.idPartido}">
-                                                <button>
-                                                    Eliminar
-                                                </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                <button>
-                                                    Resultado
-                                                </button>
-                                            </a>
-                                        </td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>
-                                            <a href="/Furtgolito/LimpiarPartidoServlet?idPartido=${lp.idPartido}">
-                                                <button>
-                                                    Limpiar
-                                                </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                <button>
-                                                    Resultado
-                                                </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/Furtgolito/AltaGolServlet?idPartido=${lp.idPartido}">
-                                                <button>
-                                                    Goles
-                                                </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/Furtgolito/AltaTarjetaAmarillaServlet?idPartido=${lp.idPartido}">
-                                                <button>
-                                                    Tarjetas amarillas
-                                                </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="/Furtgolito/AltaTarjetaRojaServlet?idPartido=${lp.idPartido}">
-                                                <button>
-                                                    Tarjetas rojas
-                                                </button>
-                                            </a>
-                                        </td>
-                                    </c:otherwise>
-                                </c:choose>
+                                <c:if test="${!empty usuario}">
+                                    <td>
+                                        <a href="/Furtgolito/ModificarPartidoServlet?idPartido=${lp.idPartido}">
+                                            <button>
+                                                Modificar
+                                            </button>
+                                        </a>
+                                    </td>
+                                    <c:choose>
+                                        <c:when test="${lp.estado == false}">
+                                            <td>
+                                                <a href="/Furtgolito/EliminarPartidoServlet?idPartido=${lp.idPartido}">
+                                                    <button>
+                                                        Eliminar
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
+                                                    <button>
+                                                        Resultado
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>
+                                                <a href="/Furtgolito/LimpiarPartidoServlet?idPartido=${lp.idPartido}">
+                                                    <button>
+                                                        Limpiar
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
+                                                    <button>
+                                                        Resultado
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido=${lp.idPartido}">
+                                                    <button>
+                                                        Cargar detalles
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
                             </tr>
                         </c:if>
                     </c:forEach>

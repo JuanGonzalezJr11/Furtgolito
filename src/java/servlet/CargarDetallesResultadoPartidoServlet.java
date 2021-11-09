@@ -15,16 +15,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Gol;
 import modelo.Jugador;
 import modelo.Partido;
 import modelo.TarjetaAmarilla;
+import modelo.TarjetaRoja;
 
 /**
  *
  * @author JuanG
  */
-@WebServlet(name = "ResultadoPartido2Servlet", urlPatterns = {"/ResultadoPartido2Servlet"})
-public class ResultadoPartido2Servlet extends HttpServlet {
+@WebServlet(name = "CargarDetallesResultadoPartidoServlet", urlPatterns = {"/CargarDetallesResultadoPartidoServlet"})
+public class CargarDetallesResultadoPartidoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +45,10 @@ public class ResultadoPartido2Servlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ResultadoPartido2Servlet</title>");            
+            out.println("<title>Servlet CargarDetallesResultadoPartidoServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ResultadoPartido2Servlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CargarDetallesResultadoPartidoServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,19 +66,39 @@ public class ResultadoPartido2Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // GOLES:
         GestorBaseDatos g = new GestorBaseDatos();
-        String resultadoIdPartido = (String) request.getParameter("idPartido");
-        int idPartido = Integer.parseInt(resultadoIdPartido);
+        String idPartido = (String) request.getParameter("idPartido");
+        int partido = Integer.parseInt(idPartido);
         Partido p = new Partido();
-        p = g.obtenerPartidoPorId(idPartido);
+        p = g.obtenerPartidoPorId(partido);
         request.setAttribute("partido", p);
-        ArrayList<Jugador> j = g.obtenerJugadorPorPartido(idPartido);
-        request.setAttribute("mvp", j);
-        // Tarjeta amarilla:
-        request.setAttribute("amonestado", j);
+        ArrayList<Jugador> j = g.obtenerJugadorPorPartido(partido);
+        request.setAttribute("jugador", j);
+        ArrayList<Gol> gol = g.listaGolesPorPartido(partido);
+        request.setAttribute("gol", gol);
+        int cantidadGoles = g.cantidadGoles(partido);
+        request.setAttribute("cantidadGoles", cantidadGoles);
+        int cantidadGolesLocalYVisitante = g.cantidadGolesLocalYVisitante(partido);
+        request.setAttribute("cantidadGolesLYV", cantidadGolesLocalYVisitante);
         
-        // Redirección:
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/ResultadoPartido2.jsp");
+        // TARJETAS AMARILLAS:
+        ArrayList<TarjetaAmarilla> ta = g.listaTarjetasAmarillasPorPartido(partido);
+        request.setAttribute("tarjetaAmarilla", ta);
+        int cantidadTarjetasAmarillas = g.cantidadTarjetasAmarillas(partido);
+        request.setAttribute("cantidadTarjetasAmarillas", cantidadTarjetasAmarillas);
+        
+        // TARJETAS ROJAS:
+        ArrayList<TarjetaRoja> tr = g.listaTarjetasRojasPorPartido(partido);
+        request.setAttribute("tarjetaRoja", tr);
+        int cantidadTarjetasRojas = g.cantidadTarjetasRojas(partido);
+        request.setAttribute("cantidadTarjetasRojas", cantidadTarjetasRojas);
+        
+        // MVP:
+        ArrayList<Jugador> mvp = g.obtenerMvpPorPartido(partido);
+        request.setAttribute("mvp", mvp);
+        
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/CargarDetallesResultadoPartido.jsp");
 	rd.forward(request, response);
     }
 
@@ -91,15 +113,7 @@ public class ResultadoPartido2Servlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GestorBaseDatos g = new GestorBaseDatos();
-        int idPartido = Integer.parseInt((String) request.getParameter("txtIdPartido"));
-        int resultadoEquipoLocal = Integer.parseInt((String) request.getParameter("txtResultadoEquipoLocal"));
-        int resultadoEquipoVisitante = Integer.parseInt((String) request.getParameter("txtResultadoEquipoVisitante"));
-        String idMvp = request.getParameter("cboMvp");
-        Jugador mvp = g.obtenerMvp(Integer.parseInt(idMvp));
-        g.resultadoPartido(new Partido(idPartido, mvp, resultadoEquipoLocal, resultadoEquipoVisitante));
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListaPartidos.jsp");
-	rd.forward(request, response);
+        processRequest(request, response);
     }
 
     /**

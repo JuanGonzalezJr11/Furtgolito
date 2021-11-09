@@ -51,21 +51,25 @@
                         <td>
                             ${listadoArbitros.email}
                         </td>
-                        <td>
-                            <a href="/Furtgolito/ModificarArbitroServlet?idArbitro=${listadoArbitros.idArbitro}">
-                                <button>
-                                    Modificar
-                                </button>
-                            </a>
-                        </td>
+                        <c:if test="${!empty usuario}">
+                            <td>
+                                <a href="/Furtgolito/ModificarArbitroServlet?idArbitro=${listadoArbitros.idArbitro}">
+                                    <button>
+                                        Modificar
+                                    </button>
+                                </a>
+                            </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-        <a href="/Furtgolito/AltaArbitroServlet">
-            <button>
-                Nuevo arbitro
-            </button>
-        </a>
+        <c:if test="${!empty usuario}">
+            <a href="/Furtgolito/AltaArbitroServlet">
+                <button>
+                    Nuevo arbitro
+                </button>
+            </a>
+        </c:if>
     </body>
 </html>

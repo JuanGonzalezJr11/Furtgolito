@@ -35,6 +35,41 @@ public class GestorBaseDatos {
         }
     }
     
+    public boolean existeUsuario(String usuario, String contrasena)
+    {
+        String username = "";
+        String password = "";
+        
+        try 
+        {
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Usuarios WHERE usuario = ? AND contrasena = ?");
+            ps.setString(1, usuario);
+            ps.setString(2, contrasena);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+            {
+               username = rs.getString("usuario");
+               password = rs.getString("contrasena");
+            }
+            rs.close();
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            cerrarConexion();
+        }
+        
+        if(usuario.equals(username) && contrasena.equals(password))
+        {
+            return true;
+        }
+        return false;
+    }
+    
     // ----------------------------- USUARIO ----------------------------------
     
     public void altaUsuario(Usuario u){
@@ -239,7 +274,14 @@ public class GestorBaseDatos {
             while(rs.next()){
                 String nombre = rs.getString("nombre");
                 int puntos = rs.getInt("puntos");
-                eq = new Equipo(idEquipo, nombre, puntos);
+                int partidosJugados = rs.getInt("partidosJugados");
+                int partidosGanados = rs.getInt("partidosGanados");
+                int partidosEmpatados = rs.getInt("partidosEmpatados");
+                int partidosPerdidos = rs.getInt("partidosPerdidos");
+                int golesFavor = rs.getInt("golesFavor");
+                int golesContra = rs.getInt("golesContra");
+                int diferenciaGoles = rs.getInt("diferenciaGoles");
+                eq = new Equipo(idEquipo, nombre, puntos, partidosJugados, partidosGanados, partidosEmpatados, partidosPerdidos, golesFavor, golesContra, diferenciaGoles);
             }
             rs.close();
         }
@@ -473,7 +515,7 @@ public class GestorBaseDatos {
     public void altaEquipo(Equipo eq){
         try{
             abrirConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Equipos VALUES (?, 0)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Equipos VALUES (?, 0, 0, 0, 0, 0, 0, 0, 0)");
             ps.setString(1, eq.getNombre());
             
             ps.executeUpdate();
@@ -496,8 +538,16 @@ public class GestorBaseDatos {
             while(rs.next()){
                 int idEquipo = rs.getInt("idEquipo");
                 String nombre = rs.getString("nombre");
+                int puntos = rs.getInt("puntos");
+                int partidosJugados = rs.getInt("partidosJugados");
+                int partidosGanados = rs.getInt("partidosGanados");
+                int partidosEmpatados = rs.getInt("partidosEmpatados");
+                int partidosPerdidos = rs.getInt("partidosPerdidos");
+                int golesFavor = rs.getInt("golesFavor");
+                int golesContra = rs.getInt("golesContra");
+                int diferenciaGoles = rs.getInt("diferenciaGoles");
                 
-                lista.add(new Equipo(idEquipo, nombre));
+                lista.add(new Equipo(idEquipo, nombre, puntos, partidosJugados, partidosGanados, partidosEmpatados, partidosPerdidos, golesFavor, golesContra, diferenciaGoles));
             }
             rs.close();
         }
@@ -539,8 +589,16 @@ public class GestorBaseDatos {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 String nombre = rs.getString("nombre");
+                int puntos = rs.getInt("puntos");
+                int partidosJugados = rs.getInt("partidosJugados");
+                int partidosGanados = rs.getInt("partidosGanados");
+                int partidosEmpatados = rs.getInt("partidosEmpatados");
+                int partidosPerdidos = rs.getInt("partidosPerdidos");
+                int golesFavor = rs.getInt("golesFavor");
+                int golesContra = rs.getInt("golesContra");
+                int diferenciaGoles = rs.getInt("diferenciaGoles");
                 
-                eq = new Equipo(idEquipo, nombre);
+                eq = new Equipo(idEquipo, nombre, puntos, partidosJugados, partidosGanados, partidosEmpatados, partidosPerdidos, golesFavor, golesContra, diferenciaGoles);
             }
             rs.close();
         }
@@ -588,6 +646,153 @@ public class GestorBaseDatos {
             cerrarConexion();
         }
         return lista;
+    }
+    
+    public void asignarPuntos(int idEquipo, int puntos){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET puntos = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, puntos);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void partidoJugado(int idEquipo, int partidosJugados){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET partidosJugados = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, partidosJugados);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void partidoGanado(int idEquipo, int partidosGanados){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET partidosGanados = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, partidosGanados);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void partidoEmpatado(int idEquipo, int partidosEmpatados){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET partidosEmpatados = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, partidosEmpatados);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void partidoPerdido(int idEquipo, int partidosPerdidos){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET partidosPerdidos = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, partidosPerdidos);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void golesFavor(int idEquipo, int golesFavor){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET golesFavor = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, golesFavor);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+
+    public void golesContra(int idEquipo, int golesContra){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET golesContra = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, golesContra);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
+    public void diferenciaGoles(int idEquipo){
+        String sql = "";
+        Equipo eq = new Equipo();
+        eq = obtenerEquipoPorId(idEquipo);
+        int diferenciaGoles = eq.getGolesFavor() - eq.getGolesContra();
+        try{
+            abrirConexion();
+            sql = "UPDATE Equipos SET diferenciaGoles = ? WHERE idEquipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, diferenciaGoles);
+            ps.setInt(2, idEquipo);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
     }
     
     // ----------------------------- CAMPO -------------------------------------
@@ -943,6 +1148,60 @@ public class GestorBaseDatos {
         return j;
     }
     
+    public ArrayList<Jugador> obtenerMvpPorPartido (int idPartido){
+        ArrayList<Jugador> lista = new ArrayList<>();
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT *\n" +
+                                                        "FROM Jugadores j\n" +
+                                                        "INNER JOIN Partidos p ON j.idJugador = p.idMvp\n" +
+                                                        "WHERE idPartido = ?");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int idJugador = rs.getInt("idJugador");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                int edad = rs.getInt("edad");
+                int idPosicionJugador = rs.getInt("idPosicionJugador");
+                PosicionJugador posicionJugador = obtenerPosicionJugador(idPosicionJugador);
+                int dorsal = rs.getInt("dorsal");
+                int idEquipo = rs.getInt("idEquipo");
+                Equipo equipo = obtenerEquipo(idEquipo);
+                boolean suspension = rs.getBoolean("suspension");
+                boolean capitan = rs.getBoolean("capitan");
+                String telefono = rs.getString("telefono");
+                String email = rs.getString("email");
+                lista.add(new Jugador(idJugador, nombre, apellido, edad, posicionJugador, dorsal, equipo, suspension, capitan, telefono, email));
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return lista;
+    }
+    
+    public void eliminarMvp(int idPartido){
+        String sql = "";
+        try{
+            abrirConexion();
+            sql = "UPDATE Partidos SET idMvp = null WHERE idPartido = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idPartido);
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+    }
+    
     public ArrayList<Jugador> obtenerJugadorPorPartido (int idPartido){
         ArrayList<Jugador> lista = new ArrayList<>();
         try{
@@ -951,7 +1210,7 @@ public class GestorBaseDatos {
                                                         "FROM Jugadores j\n" +
                                                         "INNER JOIN Equipos e ON j.idEquipo = e.idEquipo\n" +
                                                         "INNER JOIN Partidos p ON p.idEquipoLocal = e.idEquipo OR p.idEquipoVisitante = e.idEquipo\n" +
-                                                        "WHERE idPartido = ?\n" +
+                                                        "WHERE idPartido = ? AND suspension = 'false'\n" +
                                                         "ORDER BY j.idEquipo, j.idPosicionJugador");
             ps.setInt(1, idPartido);
             ResultSet rs = ps.executeQuery();
@@ -1101,13 +1360,12 @@ public class GestorBaseDatos {
         boolean resultado = false;
         try{
             abrirConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET idMvp = ?, resultadoEquipoLocal = ?, resultadoEquipoVisitante = ?, estado = 'true', idEquipoGanador = ?, idEquipoPerdedor = ? WHERE idPartido = ?");
-            ps.setInt(1, partido.getMvp().getIdJugador());
-            ps.setInt(2, partido.getResultadoEquipoLocal());
-            ps.setInt(3, partido.getResultadoEquipoVisitante());
-            ps.setInt(4, partido.getEquipoGanador().getIdEquipo());
-            ps.setInt(5, partido.getEquipoPerdedor().getIdEquipo());
-            ps.setInt(6, partido.getIdPartido());
+            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET resultadoEquipoLocal = ?, resultadoEquipoVisitante = ?, estado = 'true', idEquipoGanador = ?, idEquipoPerdedor = ? WHERE idPartido = ?");
+            ps.setInt(1, partido.getResultadoEquipoLocal());
+            ps.setInt(2, partido.getResultadoEquipoVisitante());
+            ps.setInt(3, partido.getEquipoGanador().getIdEquipo());
+            ps.setInt(4, partido.getEquipoPerdedor().getIdEquipo());
+            ps.setInt(5, partido.getIdPartido());
             
             ps.executeUpdate();
             resultado = true;
@@ -1125,11 +1383,30 @@ public class GestorBaseDatos {
         boolean resultado = false;
         try{
             abrirConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET idMvp = ?, resultadoEquipoLocal = ?, resultadoEquipoVisitante = ?, estado = 'true', idEquipoGanador = null, idEquipoPerdedor = null WHERE idPartido = ?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET resultadoEquipoLocal = ?, resultadoEquipoVisitante = ?, estado = 'true', idEquipoGanador = null, idEquipoPerdedor = null WHERE idPartido = ?");
+            ps.setInt(1, partido.getResultadoEquipoLocal());
+            ps.setInt(2, partido.getResultadoEquipoVisitante());
+            ps.setInt(3, partido.getIdPartido());
+            
+            ps.executeUpdate();
+            resultado = true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return resultado;
+    }
+    
+    public boolean resultadoPartidoMvp(Partido partido){
+        boolean resultado = false;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("UPDATE Partidos SET idMvp = ? WHERE idPartido = ?");
             ps.setInt(1, partido.getMvp().getIdJugador());
-            ps.setInt(2, partido.getResultadoEquipoLocal());
-            ps.setInt(3, partido.getResultadoEquipoVisitante());
-            ps.setInt(4, partido.getIdPartido());
+            ps.setInt(2, partido.getIdPartido());
             
             ps.executeUpdate();
             resultado = true;
@@ -1222,24 +1499,6 @@ public class GestorBaseDatos {
             cerrarConexion();
         }
         return lista;
-    }
-    
-    public void asignarPuntos(int idEquipo, int puntos){
-        String sql = "";
-        try{
-            abrirConexion();
-            sql = "UPDATE Equipos SET puntos = ? WHERE idEquipo = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, puntos);
-            ps.setInt(2, idEquipo);
-            ps.executeUpdate();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        finally{
-            cerrarConexion();
-        }
     }
     
     // LimpiarPartido:
@@ -1358,6 +1617,27 @@ public class GestorBaseDatos {
         return lista;
     }
     
+    public int getCantidadGolesTotales(){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT count(idGol) 'cantidad' FROM Goles");
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
     public int cantidadGoles (int idPartido){
         int cantidad = 0;
         try{
@@ -1406,6 +1686,214 @@ public class GestorBaseDatos {
         return cantidad;
     }
     
+    public int cantidadGolesPorPartidoEquipoLocal (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoLocal AND g.contra = 'false'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadGolesContraPorPartidoEquipoLocal (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoLocal AND g.contra = 'true'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadGolesPorPartidoEquipoVisitante (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoVisitante AND g.contra = 'false'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadGolesContraPorPartidoEquipoVisitante (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoVisitante AND g.contra = 'true'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadGolesPorPartidoEquipoGanador (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoGanador AND g.contra = 'false'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadGolesContraPorPartidoEquipoGanador (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoGanador AND g.contra  = 'true'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadGolesPorPartidoEquipoPerdedor (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoPerdedor AND g.contra = 'false'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadGolesContraPorPartidoEquipoPerdedor (int idPartido){
+        int cantidad = 0;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad'\n" +
+                                                        "FROM Goles g\n" +
+                                                        "INNER JOIN Partidos p ON g.idPartido = p.idPartido\n" +
+                                                        "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                                        "WHERE p.idPartido = ? AND j.idEquipo = p.idEquipoPerdedor AND g.contra = 'true'");
+            ps.setInt(1, idPartido);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad");
+                return cantidad = cantidadGoles;
+            }
+            rs.close();
+        }
+        catch(Exception e){
+           e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
     public void eliminarGol(int idGol){
         try{
             abrirConexion();
@@ -1419,6 +1907,34 @@ public class GestorBaseDatos {
         finally{
             cerrarConexion();
         }
+    }
+    
+    public Gol obtenerGolPorId(int idGol){
+        Gol g = null;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Goles WHERE idGol = ?");
+            ps.setInt(1, idGol);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int idJugador = rs.getInt("idJugador");
+                Jugador jugador = obtenerJugadorPorId(idJugador);
+                int minuto = rs.getInt("minuto");
+                int idPartido = rs.getInt("idPartido");
+                Partido partido = obtenerPartidoPorId(idPartido);
+                boolean contra = rs.getBoolean("contra");
+                
+                g = new Gol(idGol, jugador, minuto, partido, contra);
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return g;
     }
     
     // ------------------------ TARJETAS AMARILLAS -----------------------------
@@ -1440,6 +1956,33 @@ public class GestorBaseDatos {
         finally{
             cerrarConexion();
         }
+    }
+    
+    public TarjetaAmarilla obtenerTarjetaAmarillaPorId(int idTarjetaAmarilla){
+        TarjetaAmarilla ta = null;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM TarjetasAmarillas WHERE idTarjetaAmarilla = ?");
+            ps.setInt(1, idTarjetaAmarilla);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int idJugador = rs.getInt("idJugador");
+                Jugador jugador = obtenerJugadorPorId(idJugador);
+                int minuto = rs.getInt("minuto");
+                int idPartido = rs.getInt("idPartido");
+                Partido partido = obtenerPartidoPorId(idPartido);
+                
+                ta = new TarjetaAmarilla(idTarjetaAmarilla, jugador, minuto, partido);
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return ta;
     }
     
     public ArrayList<TarjetaAmarilla> listaTarjetasAmarillasPorPartido (int idPartido){
@@ -1532,6 +2075,34 @@ public class GestorBaseDatos {
         }
     }
     
+    public TarjetaRoja obtenerTarjetaRojaPorId(int idTarjetaRoja){
+        TarjetaRoja tr = null;
+        try{
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM TarjetasRojas WHERE idTarjetaRoja = ?");
+            ps.setInt(1, idTarjetaRoja);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int idJugador = rs.getInt("idJugador");
+                Jugador jugador = obtenerJugadorPorId(idJugador);
+                int minuto = rs.getInt("minuto");
+                int idPartido = rs.getInt("idPartido");
+                Partido partido = obtenerPartidoPorId(idPartido);
+                String motivo = rs.getString("motivo");
+                
+                tr = new TarjetaRoja(idTarjetaRoja, jugador, minuto, partido, motivo);
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return tr;
+    }
+    
     public ArrayList<TarjetaRoja> listaTarjetasRojasPorPartido (int idPartido){
         ArrayList<TarjetaRoja> lista = new ArrayList<>();
         try{
@@ -1608,18 +2179,46 @@ public class GestorBaseDatos {
         try{
             abrirConexion();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT TOP 3 j.nombre, j.apellido, e.nombre 'equipo', count(idGol) 'cantidad goles'\n" +
-                                           "FROM Jugadores j\n" +
-                                           "INNER JOIN Goles g ON j.idJugador = g.idJugador\n" +
+            ResultSet rs = st.executeQuery("SELECT TOP 3 j.nombre, apellido, e.nombre 'equipo', count(idGol) 'cantidad goles'\n" +
+                                           "FROM Goles g\n" +
+                                           "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
                                            "INNER JOIN Equipos e ON j.idEquipo = e.idEquipo\n" +
-                                           "GROUP BY idPartido, j.nombre, j.apellido, e.nombre\n" +
-                                           "ORDER BY [Cantidad goles] DESC");
+                                           "GROUP BY j.nombre, apellido, e.nombre\n" +
+                                           "ORDER BY [cantidad goles] DESC");
             while(rs.next()){
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String nombreEquipo = rs.getString("equipo");
                 int cantidadGoles = rs.getInt("cantidad goles");
-                
+                lista.add(new GoleadorDTO(nombre, apellido, nombreEquipo, cantidadGoles));
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return lista;
+    }
+    
+    public ArrayList<GoleadorDTO> getTablaGoleadores(){
+        ArrayList<GoleadorDTO> lista = new ArrayList<>();
+        try{
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT j.nombre, apellido, e.nombre 'equipo', count(idGol) 'cantidad goles'\n" +
+                                           "FROM Goles g\n" +
+                                           "INNER JOIN Jugadores j ON g.idJugador = j.idJugador\n" +
+                                           "INNER JOIN Equipos e ON j.idEquipo = e.idEquipo\n" +
+                                           "GROUP BY j.nombre, apellido, e.nombre\n" +
+                                           "ORDER BY [cantidad goles] DESC");
+            while(rs.next()){
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String nombreEquipo = rs.getString("equipo");
+                int cantidadGoles = rs.getInt("cantidad goles");
                 lista.add(new GoleadorDTO(nombre, apellido, nombreEquipo, cantidadGoles));
             }
             rs.close();
@@ -1644,7 +2243,33 @@ public class GestorBaseDatos {
                 String nombre = rs.getString("nombre");
                 int puntos = rs.getInt("puntos");
                 int posicion = rs.getInt("posicion");
-                
+                lista.add(new EquipoDTO(nombre, puntos, posicion));
+            }
+            rs.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return lista;
+    }
+    
+    public ArrayList<EquipoDTO> getPosicionesEquipos(){
+        ArrayList<EquipoDTO> lista = new ArrayList<>();
+        try{
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT ROW_NUMBER() OVER (ORDER BY puntos DESC) 'posicion', nombre, puntos, COUNT(p.idPartido) 'pj'\n" +
+                                           "FROM Equipos e\n" +
+                                           "INNER JOIN Partidos p ON e.idEquipo = p.idEquipoLocal OR e.idEquipo = p.idEquipoVisitante\n" +
+                                           "WHERE p.estado = 'true'\n" +
+                                           "GROUP BY nombre, puntos");
+            while(rs.next()){
+                String nombre = rs.getString("nombre");
+                int puntos = rs.getInt("puntos");
+                int posicion = rs.getInt("posicion");
                 lista.add(new EquipoDTO(nombre, puntos, posicion));
             }
             rs.close();

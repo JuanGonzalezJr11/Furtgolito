@@ -13,14 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.TarjetaRoja;
 
 /**
  *
  * @author JuanG
  */
-@WebServlet(name = "EliminarTarjetaRojaServlet", urlPatterns = {"/EliminarTarjetaRojaServlet"})
-public class EliminarTarjetaRojaServlet extends HttpServlet {
+@WebServlet(name = "EliminarMvpServlet", urlPatterns = {"/EliminarMvpServlet"})
+public class EliminarMvpServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,13 +35,10 @@ public class EliminarTarjetaRojaServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String idPartido = request.getParameter("idPartido");
-            String borrarIdTarjetaRoja = (String) request.getParameter("idTarjetaRoja");
-            int idTarjetaRoja = Integer.parseInt(borrarIdTarjetaRoja);
+            int partido = Integer.parseInt(idPartido);
             GestorBaseDatos g = new GestorBaseDatos();
-            TarjetaRoja tr = g.obtenerTarjetaRojaPorId(idTarjetaRoja);
-            int opcion = 1;
-            g.jugadorSuspendido(tr.getJugador().getIdJugador(), opcion);
-            g.eliminarTarjetaRoja(idTarjetaRoja);
+            g.eliminarMvp(partido);
+            //response.sendRedirect("/Furtgolito/AltaTarjetaAmarillaServlet?idPartido="+idPartido);
             response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
         }
     }
