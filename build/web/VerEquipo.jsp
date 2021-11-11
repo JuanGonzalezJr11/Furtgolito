@@ -19,75 +19,140 @@
         <h1>
             ${equipo.nombre}
         </h1>
-        <h2>
-            Lista de jugadores
-        </h2>
         <table>
             <thead>
                 <tr>
                     <th>
-                        Nombre
+                        Puntos
                     </th>
                     <th>
-                        Apellido
+                        Partidos jugados
                     </th>
                     <th>
-                        Edad
+                        Partidos ganados
                     </th>
                     <th>
-                        Posición
+                        Partidos empatados
                     </th>
                     <th>
-                        Dorsal
+                        Partidos perdidos
                     </th>
                     <th>
-                        Capitan
+                        Goles a favor
                     </th>
                     <th>
-                        Teléfono
+                        Goles en contra
                     </th>
                     <th>
-                        E-mail
-                    </th>
-                    <th>
-                        Suspensión
+                        Diferencia de goles
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${jugador}" var="j">
-                    <tr>
-                        <td>
-                            ${j.nombre}
-                        </td>
-                        <td>
-                            ${j.apellido}
-                        </td>
-                        <td>
-                            ${j.edad}
-                        </td>
-                        <td>
-                            ${j.posicionJugador}
-                        </td>
-                        <td>
-                            ${j.dorsal}
-                        </td>
-                        <td>
-                            ${j.esCapitan()}
-                        </td>
-                        <td>
-                            ${j.telefono}
-                        </td>
-                        <td>
-                            ${j.email}
-                        </td>
-                        <td>
-                            ${j.estaSuspendido()}
-                        </td>
-                    </tr>
-                </c:forEach>
+                <tr>
+                    <td>
+                        ${equipo.puntos}
+                    </td>
+                    <td>
+                        ${equipo.partidosJugados}
+                    </td>
+                    <td>
+                        ${equipo.partidosGanados}
+                    </td>
+                    <td>
+                        ${equipo.partidosEmpatados}
+                    </td>
+                    <td>
+                        ${equipo.partidosPerdidos}
+                    </td>
+                    <td>
+                        ${equipo.golesFavor}
+                    </td>
+                    <td>
+                        ${equipo.golesContra}
+                    </td>
+                    <td>
+                        ${equipo.diferenciaGoles}
+                    </td>
+                </tr>
             </tbody>
         </table>
+        <h2>
+            Lista de jugadores
+        </h2>
+        <c:choose>
+            <c:when test="${cantidadJugadores == 0}">
+                Este equipo aún no tiene jugadores.
+            </c:when>
+            <c:otherwise>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Apellido
+                            </th>
+                            <th>
+                                Edad
+                            </th>
+                            <th>
+                                Posición
+                            </th>
+                            <th>
+                                Dorsal
+                            </th>
+                            <th>
+                                Capitan
+                            </th>
+                            <th>
+                                Teléfono
+                            </th>
+                            <th>
+                                E-mail
+                            </th>
+                            <th>
+                                Suspensión
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${jugador}" var="j">
+                            <tr>
+                                <td>
+                                    ${j.nombre}
+                                </td>
+                                <td>
+                                    ${j.apellido}
+                                </td>
+                                <td>
+                                    ${j.edad}
+                                </td>
+                                <td>
+                                    ${j.posicionJugador}
+                                </td>
+                                <td>
+                                    ${j.dorsal}
+                                </td>
+                                <td>
+                                    ${j.esCapitan()}
+                                </td>
+                                <td>
+                                    ${j.telefono}
+                                </td>
+                                <td>
+                                    ${j.email}
+                                </td>
+                                <td>
+                                    ${j.estaSuspendido()}
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
         <a href="/Furtgolito/ListaEquipos.jsp">
             <button>
                 Volver

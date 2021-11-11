@@ -42,53 +42,90 @@
                 <label>
                     Equipo local:
                 </label>
-                <select name="cboEquipoLocal" id="cboEquipoLocal">
-                    <c:forEach var="el" items="${gestor.equipoLocalVisitante}">
-                        <option value="${el.idEquipo}">
-                            ${el.nombre}
-                        </option>
-                    </c:forEach>
-                </select>
+                <c:choose>
+                    <c:when test="${gestor.cantidadEquipos == 0}">
+                        No hay equipos cargados aún.
+                    </c:when>
+                    <c:otherwise>
+                        <select name="cboEquipoLocal" id="cboEquipoLocal">
+                            <c:forEach var="el" items="${gestor.equipoLocalVisitante}">
+                                <option value="${el.idEquipo}">
+                                    ${el.nombre}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div>
                 <label>
                     Equipo visitante:
                 </label>
-                <select name="cboEquipoVisitante" id="cboEquipoVisitante">
-                    <c:forEach var="ev" items="${gestor.equipoLocalVisitante}">
-                        <option value="${ev.idEquipo}">
-                            ${ev.nombre}
-                        </option>
-                    </c:forEach>
-                </select>
+                <c:choose>
+                    <c:when test="${gestor.cantidadEquipos == 0}">
+                        No hay equipos cargados aún.
+                    </c:when>
+                    <c:otherwise>
+                        <select name="cboEquipoVisitante" id="cboEquipoVisitante">
+                            <c:forEach var="ev" items="${gestor.equipoLocalVisitante}">
+                                <option value="${ev.idEquipo}">
+                                    ${ev.nombre}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div>
                 <label>
                     Arbitro:
                 </label>
-                <select name="cboArbitro" class="form-control" id="cboArbitro">
-                    <c:forEach var="ar" items="${gestor.arbitros}">
-                        <option value="${ar.idArbitro}">
-                            ${ar.nombre} ${ar.apellido}
-                        </option>
-                    </c:forEach>
-                </select>
+                <c:choose>
+                    <c:when test="${gestor.cantidadArbitros == 0}">
+                        No hay árbitros cargados aún.
+                    </c:when>
+                    <c:otherwise>
+                        <select name="cboArbitro" class="form-control" id="cboArbitro">
+                            <c:forEach var="ar" items="${gestor.arbitros}">
+                                <option value="${ar.idArbitro}">
+                                    ${ar.nombre} ${ar.apellido}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div>
                 <label>
                     Campo:
                 </label>
-                <select name="cboCampo" class="form-control" id="cboCampo">
-                    <c:forEach var="c" items="${gestor.campos}">
-                        <option value="${c.idCampo}">
-                            ${c.nombre}
-                        </option>
-                    </c:forEach>
-                </select>
+                <c:choose>
+                    <c:when test="${gestor.cantidadCampos == 0}">
+                        No hay campos cargados aún.
+                    </c:when>
+                    <c:otherwise>
+                        <select name="cboCampo" class="form-control" id="cboCampo">
+                            <c:forEach var="c" items="${gestor.campos}">
+                                <option value="${c.idCampo}">
+                                    ${c.nombre}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <button type="submit">
-                Agregar
-            </button>
+            <c:if test="${gestor.cantidadArbitros != 0 || gestor.cantidadCampos != 0 || gestor.cantidadEquipos != 0}">
+                <button type="submit">
+                    Agregar
+                </button>
+            </c:if>
         </form>
+        <c:if test="${gestor.cantidadArbitros == 0 || gestor.cantidadCampos == 0 || gestor.cantidadEquipos == 0}">
+            <a href="/Furtgolito/ListaPartidos.jsp">
+                <button>
+                    Volver
+                </button> 
+            </a>
+        </c:if>
     </body>
 </html>

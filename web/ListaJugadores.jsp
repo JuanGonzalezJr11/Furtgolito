@@ -18,117 +18,126 @@
         <%@include file = "Navbar.jsp" %>
         <br>
         <c:if test="${!empty usuario}">
-            <a href="/Furtgolito/AltaJugadorServlet">
-                <button>
-                    Nuevo jugador
-                </button>
-            </a>
+            <c:if test="${gestor.cantidadEquipos != 0}">
+                <a href="/Furtgolito/AltaJugadorServlet">
+                    <button>
+                        Nuevo jugador
+                    </button>
+                </a>
+            </c:if>
         </c:if>
         <h1>
             Listado de jugadores
         </h1>
         <c:choose>
-            <c:when test="${gestor.cantidadJugadores == 0}">
-                No se ha cargado ningún jugador aún.
+            <c:when test="${gestor.cantidadEquipos == 0}">
+                No se ha cargado ningún equipo aún. Debe cargar el equipo para poder cargar sus jugadores.
             </c:when>
             <c:otherwise>
                 <c:forEach items="${gestor.listadoEquipos}" var="e">
                     <h2>
                         ${e.nombre}
                     </h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    Nombre
-                                </th>
-                                <th>
-                                    Apellido
-                                </th>
-                                <th>
-                                    Edad
-                                </th>
-                                <th>
-                                    Posición
-                                </th>
-                                <th>
-                                    Dorsal
-                                </th>
-                                <th>
-                                    Capitan
-                                </th>
-                                <th>
-                                    Teléfono
-                                </th>
-                                <th>
-                                    E-mail
-                                </th>
-                                <th>
-                                    Suspensión
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${gestor.listadoJugadores}" var="listadoJugadores">
-                                <c:if test="${e.nombre == listadoJugadores.equipo}">
+                    <c:choose>
+                        <c:when test="${gestor.cantidadJugadoresPorEquipo(e.idEquipo) == 0}">
+                            Este equipo aún no tiene jugadores.
+                        </c:when>
+                        <c:otherwise>
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>
-                                            ${listadoJugadores.nombre}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.apellido}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.edad}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.posicionJugador}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.dorsal}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.esCapitan()}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.telefono}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.email}
-                                        </td>
-                                        <td>
-                                            ${listadoJugadores.estaSuspendido()}
-                                        </td>
-                                        <c:if test="${!empty usuario}">
-                                            <td>
-                                                <c:if test="${listadoJugadores.suspension == true}">
-                                                    <a href="/Furtgolito/QuitarSuspensionJugadorServlet?idJugador=${listadoJugadores.idJugador}">
-                                                        <button>
-                                                            Quitar suspensión
-                                                        </button>
-                                                    </a>
-                                                </c:if>
-                                                <c:if test="${listadoJugadores.suspension == false}">
-                                                    <a href="/Furtgolito/SuspenderJugadorServlet?idJugador=${listadoJugadores.idJugador}">
-                                                        <button>
-                                                            Añadir suspensión
-                                                        </button>
-                                                    </a>
-                                                </c:if>
-                                            </td>
-                                            <td>
-                                                <a href="/Furtgolito/ModificarJugadorServlet?idJugador=${listadoJugadores.idJugador}">
-                                                    <button>
-                                                        Modificar
-                                                    </button>
-                                                </a>
-                                            </td> 
-                                        </c:if>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>
+                                            Apellido
+                                        </th>
+                                        <th>
+                                            Edad
+                                        </th>
+                                        <th>
+                                            Posición
+                                        </th>
+                                        <th>
+                                            Dorsal
+                                        </th>
+                                        <th>
+                                            Capitan
+                                        </th>
+                                        <th>
+                                            Teléfono
+                                        </th>
+                                        <th>
+                                            E-mail
+                                        </th>
+                                        <th>
+                                            Suspensión
+                                        </th>
                                     </tr>
-                                </c:if>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${gestor.listadoJugadores}" var="listadoJugadores">
+                                        <c:if test="${e.nombre == listadoJugadores.equipo}">
+                                            <tr>
+                                                <td>
+                                                    ${listadoJugadores.nombre}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.apellido}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.edad}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.posicionJugador}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.dorsal}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.esCapitan()}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.telefono}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.email}
+                                                </td>
+                                                <td>
+                                                    ${listadoJugadores.estaSuspendido()}
+                                                </td>
+                                                <c:if test="${!empty usuario}">
+                                                    <td>
+                                                        <c:if test="${listadoJugadores.suspension == true}">
+                                                            <a href="/Furtgolito/QuitarSuspensionJugadorServlet?idJugador=${listadoJugadores.idJugador}">
+                                                                <button>
+                                                                    Quitar suspensión
+                                                                </button>
+                                                            </a>
+                                                        </c:if>
+                                                        <c:if test="${listadoJugadores.suspension == false}">
+                                                            <a href="/Furtgolito/SuspenderJugadorServlet?idJugador=${listadoJugadores.idJugador}">
+                                                                <button>
+                                                                    Añadir suspensión
+                                                                </button>
+                                                            </a>
+                                                        </c:if>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/Furtgolito/ModificarJugadorServlet?idJugador=${listadoJugadores.idJugador}">
+                                                            <button>
+                                                                Modificar
+                                                            </button>
+                                                        </a>
+                                                    </td> 
+                                                </c:if>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </c:otherwise>
         </c:choose>

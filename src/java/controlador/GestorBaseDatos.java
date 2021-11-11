@@ -434,6 +434,29 @@ public class GestorBaseDatos {
         }
     }
     
+    public int cantidadJugadoresPorEquipo(int idEquipo){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) 'cantidad jugadores'\n" +
+                                                        "FROM Jugadores\n" +
+                                                        "WHERE idEquipo = ?");
+            ps.setInt(1, idEquipo);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadJugadores = rs.getInt("cantidad jugadores");
+                return cantidad = cantidadJugadores;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
     // ----------------------------- ARBITRO -----------------------------------
     
     public int getCantidadArbitros(){

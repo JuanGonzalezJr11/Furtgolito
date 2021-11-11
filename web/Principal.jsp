@@ -21,36 +21,43 @@
             <h2>
                 Posiciones
             </h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            Posición
-                        </th>
-                        <th>
-                            Equipo
-                        </th>
-                        <th>
-                            Puntos
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${gestor.posicionesEquiposTOP3}" var="e">
-                        <tr>
-                            <td>
-                                ${e.posicion}
-                            </td>
-                            <td>
-                                ${e.nombre}
-                            </td>
-                            <td>
-                                ${e.puntos}
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+            <c:choose>
+                <c:when test="${gestor.cantidadEquipos == 0}">
+                    No se han cargado equipos aún.
+                </c:when>
+                <c:otherwise>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Posición
+                                </th>
+                                <th>
+                                    Equipo
+                                </th>
+                                <th>
+                                    Puntos
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${gestor.posicionesEquiposTOP3}" var="e">
+                                <tr>
+                                    <td>
+                                        ${e.posicion}
+                                    </td>
+                                    <td>
+                                        ${e.nombre}
+                                    </td>
+                                    <td>
+                                        ${e.puntos}
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div>
             <h2>
@@ -94,12 +101,6 @@
                 </c:otherwise>
             </c:choose>
         </div>
-        <div>
-            <h2>
-                Próxima jornada
-            </h2>
-        </div>
-        <br>
         <div>
             <h2>
                 Novedades

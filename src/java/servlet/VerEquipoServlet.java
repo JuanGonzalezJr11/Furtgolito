@@ -71,6 +71,8 @@ public class VerEquipoServlet extends HttpServlet {
         request.setAttribute("equipo", e);
         ArrayList<Jugador> j = g.listaJugadoresPorEquipo(equipo);
         request.setAttribute("jugador", j);
+        int cj = g.cantidadJugadoresPorEquipo(e.getIdEquipo());
+        request.setAttribute("cantidadJugadores", cj);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/VerEquipo.jsp");
 	rd.forward(request, response);
     }
