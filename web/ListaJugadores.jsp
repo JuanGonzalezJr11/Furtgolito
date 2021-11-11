@@ -14,6 +14,7 @@
         <title>Listado de jugadores</title>
     </head>
     <body>
+        <%@include file = "LoginLogout.jsp" %>
         <%@include file = "Navbar.jsp" %>
         <br>
         <c:if test="${!empty usuario}">

@@ -33,9 +33,11 @@
                 </label>
                 <input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion" value="${novedad.descripcion}" required/>
             </div>
-            <button type="submit">
-                Aceptar
-            </button>
+            <c:if test="${!empty usuario}">
+                <button type="submit">
+                    Aceptar
+                </button>
+            </c:if>
         </form>
     </body>
 </html>

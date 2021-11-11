@@ -171,6 +171,8 @@ public class GestorBaseDatos {
         return lista;
     }
     
+    
+    
     // ---------------------------- JUGADOR ------------------------------------
     
     public int getCantidadJugadores(){
@@ -434,6 +436,25 @@ public class GestorBaseDatos {
     
     // ----------------------------- ARBITRO -----------------------------------
     
+    public int getCantidadArbitros(){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad arbitros' FROM Arbitros");
+            while(rs.next()){
+                int cantidadArbitros = rs.getInt("cantidad arbitros");
+                return cantidad = cantidadArbitros;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
     public void altaArbitro(Arbitro a){
         try{
             abrirConexion();
@@ -530,6 +551,25 @@ public class GestorBaseDatos {
     }
     
     // ----------------------------- EQUIPO ------------------------------------
+    
+    public int getCantidadEquipos(){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad equipos' FROM Equipos");
+            while(rs.next()){
+                int cantidadEquipos = rs.getInt("cantidad equipos");
+                return cantidad = cantidadEquipos;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
     
     public void altaEquipo(Equipo eq){
         try{
@@ -925,9 +965,9 @@ public class GestorBaseDatos {
         try {
             abrirConexion();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad' FROM Novedades");
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad novedades' FROM Novedades");
             while(rs.next()){
-                int cantidadNovedades = rs.getInt("cantidad");
+                int cantidadNovedades = rs.getInt("cantidad novedades");
                 return cantidad = cantidadNovedades;
             }
         } catch (Exception e) {
@@ -1042,6 +1082,25 @@ public class GestorBaseDatos {
     }
     
     // ------------------------------- PARTIDO ---------------------------------
+    
+    public int getCantidadPartidos(){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) 'cantidad partidos' FROM Partidos");
+            while(rs.next()){
+                int cantidadPartidos = rs.getInt("cantidad partidos");
+                return cantidad = cantidadPartidos;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
     
     public void altaPartido(Partido p){
         try{

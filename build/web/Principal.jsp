@@ -14,19 +14,7 @@
         <title>Furtgolito - Inicio</title>
     </head>
     <body>
-        <c:choose>
-            <c:when test="${!empty usuario}">
-                <a href="/Furtgolito/CierreSesionServlet">
-                    Cerrar sesión
-                </a>
-                <%= " ¡Hola " + request.getSession().getAttribute("usuario") + "! "%>
-            </c:when>
-            <c:otherwise>
-                <a href="/Furtgolito/InicioSesionServlet">
-                    Iniciar sesión
-                </a>
-            </c:otherwise>
-        </c:choose>
+        <%@include file = "LoginLogout.jsp" %>
         <h1>¡Bienvenidos a Furtgolito!</h1>
         <%@include file = "Navbar.jsp" %>
         <div>

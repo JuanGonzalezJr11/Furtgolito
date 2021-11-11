@@ -14,6 +14,7 @@
         <title>Listado de campos</title>
     </head>
     <body>
+        <%@include file = "LoginLogout.jsp" %>
         <%@include file = "Navbar.jsp" %>
         <br>
         <h1>
@@ -51,10 +52,12 @@
                 </table>
             </c:otherwise>
         </c:choose>
-        <a href="/Furtgolito/AltaCampoServlet">
-            <button>
-                Nuevo campo
-            </button>
-        </a>
+        <c:if test="${!empty usuario}">
+            <a href="/Furtgolito/AltaCampoServlet">
+                <button>
+                    Nuevo campo
+                </button>
+            </a>
+        </c:if>
     </body>
 </html>

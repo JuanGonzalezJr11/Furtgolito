@@ -14,6 +14,7 @@
         <title>Listado de novedades</title>
     </head>
     <body>
+        <%@include file = "LoginLogout.jsp" %>
         <%@include file = "Navbar.jsp" %>
         <br>
         <h1>
@@ -44,7 +45,8 @@
                                 <td>
                                     ${listadoNovedades.descripcion}
                                 </td>
-                                <td>
+                                <c:if test="${!empty usuario}">
+                                    <td>
                                     <a href="/Furtgolito/ModificarNovedadServlet?idNovedad=${listadoNovedades.idNovedad}">
                                         <button>
                                             Modificar
@@ -58,16 +60,19 @@
                                         </button>
                                     </a>
                                 </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </c:otherwise>
         </c:choose>
-        <a href="/Furtgolito/AltaNovedadServlet">
-            <button>
-                Nueva novedad
-            </button>
-        </a>
+        <c:if test="${!empty usuario}">
+            <a href="/Furtgolito/AltaNovedadServlet">
+                <button>
+                    Nueva novedad
+                </button>
+            </a>
+        </c:if>
     </body>
 </html>
