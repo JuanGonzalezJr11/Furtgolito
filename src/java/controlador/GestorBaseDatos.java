@@ -457,6 +457,78 @@ public class GestorBaseDatos {
         return cantidad;
     }
     
+    public int cantidadGolesPorJugador(int idJugador){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(idGol) 'cantidad goles'\n" +
+                                                        "FROM Jugadores j\n" +
+                                                        "INNER JOIN Goles g ON j.idJugador = g.idJugador\n" +
+                                                        "WHERE j.idJugador = ?");
+            ps.setInt(1, idJugador);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadGoles = rs.getInt("cantidad goles");
+                return cantidad = cantidadGoles;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadTarjetasAmarillasPorJugador(int idJugador){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(idTarjetaAmarilla) 'cantidad tarjetas amarillas'\n" +
+                                                        "FROM Jugadores j\n" +
+                                                        "INNER JOIN TarjetasAmarillas ta ON j.idJugador = ta.idJugador\n" +
+                                                        "WHERE j.idJugador = ?");
+            ps.setInt(1, idJugador);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadTarjetasAmarillas = rs.getInt("cantidad tarjetas amarillas");
+                return cantidad = cantidadTarjetasAmarillas;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
+    public int cantidadTarjetasRojasPorJugador(int idJugador){
+        int cantidad = 0;
+        try {
+            abrirConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(idTarjetaRoja) 'cantidad tarjetas rojas'\n" +
+                                                        "FROM Jugadores j\n" +
+                                                        "INNER JOIN TarjetasRojas tr ON j.idJugador = tr.idJugador\n" +
+                                                        "WHERE j.idJugador = ?");
+            ps.setInt(1, idJugador);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int cantidadTarjetasRojas = rs.getInt("cantidad tarjetas rojas");
+                return cantidad = cantidadTarjetasRojas;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+            cerrarConexion();
+        }
+        return cantidad;
+    }
+    
     // ----------------------------- ARBITRO -----------------------------------
     
     public int getCantidadArbitros(){

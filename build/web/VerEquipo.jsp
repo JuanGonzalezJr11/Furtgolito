@@ -107,13 +107,16 @@
                                 Capitan
                             </th>
                             <th>
-                                Teléfono
-                            </th>
-                            <th>
-                                E-mail
-                            </th>
-                            <th>
                                 Suspensión
+                            </th>
+                            <th>
+                                Goles
+                            </th>
+                            <th>
+                                Tarjetas amarillas
+                            </th>
+                            <th>
+                                Tarjetas rojas
                             </th>
                         </tr>
                     </thead>
@@ -139,13 +142,16 @@
                                     ${j.esCapitan()}
                                 </td>
                                 <td>
-                                    ${j.telefono}
-                                </td>
-                                <td>
-                                    ${j.email}
-                                </td>
-                                <td>
                                     ${j.estaSuspendido()}
+                                </td>
+                                <td>
+                                    ${gestor.cantidadGolesPorJugador(j.idJugador)}
+                                </td>
+                                <td>
+                                    ${gestor.cantidadTarjetasAmarillasPorJugador(j.idJugador)}
+                                </td>
+                                <td>
+                                    ${gestor.cantidadTarjetasRojasPorJugador(j.idJugador)}
                                 </td>
                             </tr>
                         </c:forEach>
