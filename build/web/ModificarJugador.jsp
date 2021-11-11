@@ -41,9 +41,8 @@
             </div>
             <div>
                 <label>
-                    Equipo: ${jugador.equipo}
+                    Equipo:
                 </label>
-                <!-- <input type="hidden" name="cboEquipo" id="cboEquipo" value="${jugador.equipo.idEquipo}"/> -->
                 <select name="cboEquipo" class="form-control" id="cboEquipo">
                     <c:forEach var="e" items="${gestor.equipos}">
                         <option value="${e.idEquipo}" <c:if test="${e.idEquipo == jugador.equipo.idEquipo}"> selected </c:if>>

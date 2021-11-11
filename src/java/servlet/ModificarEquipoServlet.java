@@ -65,7 +65,7 @@ public class ModificarEquipoServlet extends HttpServlet {
         String modificarIdEquipo = (String) request.getParameter("idEquipo");
         int idEquipo = Integer.parseInt(modificarIdEquipo);
         Equipo a = new Equipo();
-        a = g.obtenerEquipoPorId(idEquipo);
+        a = g.obtenerEquipo(idEquipo);
         request.setAttribute("equipo", a);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/ModificarEquipo.jsp");
 	rd.forward(request, response);

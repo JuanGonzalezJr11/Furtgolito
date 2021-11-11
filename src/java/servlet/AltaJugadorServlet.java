@@ -63,6 +63,12 @@ public class AltaJugadorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        GestorBaseDatos g = new GestorBaseDatos();
+        String idEquipo = (String) request.getParameter("idEquipo");
+        int equipo = Integer.parseInt(idEquipo);
+        Equipo e = new Equipo();
+        e = g.obtenerEquipo(equipo);
+        request.setAttribute("equipo", e);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/AltaJugador.jsp");
         rd.forward(request, response);
     }
@@ -85,8 +91,8 @@ public class AltaJugadorServlet extends HttpServlet {
         String idPosicionJugador = request.getParameter("cboPosicionJugador");
         PosicionJugador posicionJugador = g.obtenerPosicionJugador(Integer.parseInt(idPosicionJugador));
         int dorsal = Integer.parseInt(request.getParameter("txtDorsal"));
-        String idEquipo = request.getParameter("cboEquipo");
-        Equipo equipo = g.obtenerEquipo(Integer.parseInt(idEquipo));
+        int idEquipo = Integer.parseInt(request.getParameter("cboEquipo"));
+        Equipo equipo = g.obtenerEquipo(idEquipo);
         boolean capitan = Boolean.parseBoolean(request.getParameter("cboCapitan"));
         String telefono = request.getParameter("txtTelefono");
         String email = request.getParameter("txtEmail");

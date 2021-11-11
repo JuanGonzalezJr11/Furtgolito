@@ -67,7 +67,7 @@ public class VerEquipoServlet extends HttpServlet {
         String idEquipo = (String) request.getParameter("idEquipo");
         int equipo = Integer.parseInt(idEquipo);
         Equipo e = new Equipo();
-        e = g.obtenerEquipoPorId(equipo);
+        e = g.obtenerEquipo(equipo);
         request.setAttribute("equipo", e);
         ArrayList<Jugador> j = g.listaJugadoresPorEquipo(equipo);
         request.setAttribute("jugador", j);

@@ -56,18 +56,7 @@
                 </label>
                 <input type="number" name="txtDorsal"/>
             </div>
-            <div>
-                <label>
-                    Equipo:
-                </label>
-                <select name="cboEquipo" class="form-control" id="cboEquipo">
-                    <c:forEach var="e" items="${gestor.equipos}">
-                        <option value="${e.idEquipo}">
-                            ${e.nombre}
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
+            <input type="hidden" name="cboEquipo" id="cboEquipo" value="${equipo.idEquipo}"/>
             <div>
                 <label>
                     Capitán:

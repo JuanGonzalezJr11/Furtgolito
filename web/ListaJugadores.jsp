@@ -16,16 +16,6 @@
     <body>
         <%@include file = "LoginLogout.jsp" %>
         <%@include file = "Navbar.jsp" %>
-        <br>
-        <c:if test="${!empty usuario}">
-            <c:if test="${gestor.cantidadEquipos != 0}">
-                <a href="/Furtgolito/AltaJugadorServlet">
-                    <button>
-                        Nuevo jugador
-                    </button>
-                </a>
-            </c:if>
-        </c:if>
         <h1>
             Listado de jugadores
         </h1>
@@ -38,6 +28,15 @@
                     <h2>
                         ${e.nombre}
                     </h2>
+                    <div>
+                        <c:if test="${!empty usuario}">
+                            <a href="/Furtgolito/AltaJugadorServlet?idEquipo=${e.idEquipo}">
+                                <button>
+                                    Añadir nuevo jugador
+                                </button>
+                            </a>
+                        </c:if>
+                    </div>
                     <c:choose>
                         <c:when test="${gestor.cantidadJugadoresPorEquipo(e.idEquipo) == 0}">
                             Este equipo aún no tiene jugadores.

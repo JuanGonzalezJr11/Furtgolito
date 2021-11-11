@@ -662,37 +662,6 @@ public class GestorBaseDatos {
         return resultado;
     }
     
-    public Equipo obtenerEquipoPorId(int idEquipo){
-        Equipo eq = null;
-        try{
-            abrirConexion();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Equipos WHERE idEquipo = ?");
-            ps.setInt(1, idEquipo);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                String nombre = rs.getString("nombre");
-                int puntos = rs.getInt("puntos");
-                int partidosJugados = rs.getInt("partidosJugados");
-                int partidosGanados = rs.getInt("partidosGanados");
-                int partidosEmpatados = rs.getInt("partidosEmpatados");
-                int partidosPerdidos = rs.getInt("partidosPerdidos");
-                int golesFavor = rs.getInt("golesFavor");
-                int golesContra = rs.getInt("golesContra");
-                int diferenciaGoles = rs.getInt("diferenciaGoles");
-                
-                eq = new Equipo(idEquipo, nombre, puntos, partidosJugados, partidosGanados, partidosEmpatados, partidosPerdidos, golesFavor, golesContra, diferenciaGoles);
-            }
-            rs.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        finally{
-            cerrarConexion();
-        }
-        return eq;
-    }
-    
     public ArrayList<Jugador> listaJugadoresPorEquipo (int idEquipo){
         ArrayList<Jugador> lista = new ArrayList<>();
         try{
@@ -859,7 +828,7 @@ public class GestorBaseDatos {
     public void diferenciaGoles(int idEquipo){
         String sql = "";
         Equipo eq = new Equipo();
-        eq = obtenerEquipoPorId(idEquipo);
+        eq = obtenerEquipo(idEquipo);
         int diferenciaGoles = eq.getGolesFavor() - eq.getGolesContra();
         try{
             abrirConexion();
