@@ -8,11 +8,13 @@ package servlet;
 import controlador.GestorBaseDatos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.TarjetaAmarilla;
 import modelo.TarjetaRoja;
 
 /**
@@ -42,6 +44,12 @@ public class EliminarTarjetaRojaServlet extends HttpServlet {
             TarjetaRoja tr = g.obtenerTarjetaRojaPorId(idTarjetaRoja);
             int opcion = 1;
             g.jugadorSuspendido(tr.getJugador().getIdJugador(), opcion);
+            ArrayList<TarjetaAmarilla> ta = g.listaTarjetasAmarillasPorPartido(Integer.parseInt(idPartido));
+            for (TarjetaAmarilla tarjetaAmarilla : ta) {
+                if(tarjetaAmarilla.getJugador().getIdJugador() == tr.getJugador().getIdJugador() && tarjetaAmarilla.getMinuto() == tr.getMinuto()){
+                    g.eliminarTarjetaAmarilla(tarjetaAmarilla.getIdTarjetaAmarilla());
+                }
+            }
             g.eliminarTarjetaRoja(idTarjetaRoja);
             response.sendRedirect("/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido="+idPartido);
         }
