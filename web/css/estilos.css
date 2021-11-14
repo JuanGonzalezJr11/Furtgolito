@@ -1,0 +1,95 @@
+html{
+    min-height: 100%;
+    position: relative;
+}
+body{
+    padding: 0px;
+    margin: 0px;
+    background: #90be6d;
+    margin-bottom: 40px;
+}
+#titulo-iniciar-sesion{
+    color: white;
+    font-size: 40px;
+    font-family: 'Bebas Neue', cursive;
+    margin: 10px 10px;
+    font-style: italic;
+}
+.loginLogout{
+    background: white;
+}
+.contenedor{
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    width: 80%;
+}
+/*.contenedor-inicio-sesion{
+    position: absolute;
+    background: #00000033;
+    width: 50%;
+    height: 50%;
+    left: 25%;
+    top: 25%;
+    right: 25%;
+    bottom: 25%;
+    /*padding: 50px;
+    text-align: center;
+}*/
+.fondo-iniciar-sesion{
+    background: url("../img/FondoIniciarSesion.jpg");
+    background-size: cover;
+    margin-bottom: 0px;
+}
+.contenedor-inicio-sesion{
+    position: absolute;
+    background: #00000080;
+    width: 50%;
+    left: 25%;
+    bottom: 25%;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid;
+    border-radius: 8px;
+}
+.contenedor-inicio-sesion h1{
+    font-size: 40px;
+    text-align: center;
+    color: white;
+}
+.contenedor-inicio-sesion label{
+    font-size: 20px;
+    color: white;
+    margin: 10px;
+    display: block;
+}
+.contenedor-inicio-sesion input{
+    text-align: center;
+    padding: 5px;
+    border-radius: 8px;
+    color: gray;
+    font-size: 15px;
+    border: 1px solid gray;
+    outline: none;
+}
+.boton-inicio-sesion{
+    background-color: #7b27a1;
+    margin: 30px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.boton-inicio-sesion:hover{
+    background-color: #9931c9;
+}
+.mensaje-error-iniciar-sesion{
+    color: #CB4335;
+    font-size: 20px;
+    font-style: italic;
+}
+
+

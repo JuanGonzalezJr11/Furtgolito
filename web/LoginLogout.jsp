@@ -5,19 +5,27 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-    <c:choose>
-        <c:when test="${!empty usuario}">
-            <a href="/Furtgolito/CierreSesionServlet">
-                Cerrar sesión
-            </a>
-            <%= " ¡Hola " + request.getSession().getAttribute("usuario") + "! "%>
-        </c:when>
-        <c:otherwise>
-            <a href="/Furtgolito/InicioSesionServlet">
-                Iniciar sesión
-            </a>
-        </c:otherwise>
-    </c:choose>
+    <head>
+        <link href="estilos.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="loginLogout">
+            <c:choose>
+                <c:when test="${!empty usuario}">
+                    <a href="/Furtgolito/CierreSesionServlet">
+                        Cerrar sesión
+                    </a>
+                    <%= " ¡Hola " + request.getSession().getAttribute("usuario") + "! "%>
+                </c:when>
+                <c:otherwise>
+                    <a href="/Furtgolito/InicioSesionServlet">
+                        Iniciar sesión
+                    </a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </body>
 </html>
