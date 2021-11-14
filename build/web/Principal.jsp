@@ -11,12 +11,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="estilos.css" rel="stylesheet" type="text/css"/>
+        <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
         <title>Furtgolito - Inicio</title>
     </head>
     <body>
         <%@include file = "LoginLogout.jsp" %>
-        <h1>¡Bienvenidos a Furtgolito!</h1>
         <%@include file = "Navbar.jsp" %>
         <div class="contenedor">
             <div>

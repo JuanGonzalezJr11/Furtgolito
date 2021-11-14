@@ -14,9 +14,22 @@ body{
     font-family: 'Bebas Neue', cursive;
     margin: 10px 10px;
     font-style: italic;
+    display: inline-block;
+    width: 15%;
 }
 .loginLogout{
-    background: white;
+    background-color: white;
+    text-align: right;
+}
+.loginLogout a{
+    color: #F39C12;
+    margin: 5px;
+}
+.loginLogout a:visited{
+    color: #F39C12;
+}
+.loginLogout a:active{
+    color: #F8C471;
 }
 .contenedor{
     margin: 30px auto;
@@ -90,6 +103,46 @@ body{
     color: #CB4335;
     font-size: 20px;
     font-style: italic;
+}
+.nav{
+    background: #28B463;
+    color: white;
+    font-size: 17px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+}
+.nav a{
+    background: #28B463;
+    text-decoration: none;
+    padding: 26px 15px;
+}
+.nav a:visited{
+    background: #28B463;
+    text-decoration: none;
+    color: white;
+}
+.nav a:hover{
+    background: #1D8348;
+    text-decoration: none;
+}
+.nav label{
+    text-decoration: underline;
+    font-size: 18px;
+}
+.nav .nav-con-logeo div{
+    background: #28B463;
+    color: white;
+    font-size: 17px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+}
+.nav-con-logeo a{
+    background: #28B463;
+    text-decoration: none;
+    padding: 26px 15px;
+    display: inline-block;
 }
 
 
