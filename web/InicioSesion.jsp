@@ -7,15 +7,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html class="html-inicio-sesion">
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
         <title>Inicio sesión</title>
     </head>
-    <body class="fondo-iniciar-sesion">
-        <h1 id="titulo-iniciar-sesion">
+    <body class="fondo-inicio-sesion">
+        <h1 class="titulo-inicio-sesion">
             Furtgolito
         </h1>
         <div class="contenedor-inicio-sesion">
@@ -44,5 +44,10 @@
                 </c:if>
             </form>
         </div>
+        <footer>
+            <p>
+                Design by Juan Gonzalez | 2021
+            </p>
+        </footer>
     </body>
 </html>

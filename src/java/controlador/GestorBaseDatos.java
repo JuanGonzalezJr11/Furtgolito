@@ -1066,7 +1066,9 @@ public class GestorBaseDatos {
         try{
             abrirConexion();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Novedades");
+            ResultSet rs = st.executeQuery("SELECT *\n" +
+                                           "FROM Novedades\n" +
+                                           "ORDER BY idNovedad DESC");
             while(rs.next()){
                 int idNovedad = rs.getInt("idNovedad");
                 String titulo = rs.getString("titulo");

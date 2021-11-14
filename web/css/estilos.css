@@ -8,7 +8,19 @@ body{
     background: #90be6d;
     margin-bottom: 40px;
 }
-#titulo-iniciar-sesion{
+footer{
+    color:white;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    background: rgb(39, 39, 39, 0.4);
+}
+footer p{
+    margin: 1px;
+    font-size: 13px;
+}
+.titulo-inicio-sesion{
     color: white;
     font-size: 40px;
     font-family: 'Bebas Neue', cursive;
@@ -31,25 +43,12 @@ body{
 .loginLogout a:active{
     color: #F8C471;
 }
-.contenedor{
-    margin: 30px auto;
-    padding: 30px;
-    background: white;
-    width: 80%;
-}
-/*.contenedor-inicio-sesion{
-    position: absolute;
-    background: #00000033;
-    width: 50%;
-    height: 50%;
-    left: 25%;
-    top: 25%;
-    right: 25%;
-    bottom: 25%;
-    /*padding: 50px;
+.texto-lista-vacia{
+    font-style: italic;
+    margin: 3px;
     text-align: center;
-}*/
-.fondo-iniciar-sesion{
+}
+.fondo-inicio-sesion{
     background: url("../img/FondoIniciarSesion.jpg");
     background-size: cover;
     margin-bottom: 0px;
@@ -144,5 +143,140 @@ body{
     padding: 26px 15px;
     display: inline-block;
 }
+.fondo-principal{
+    background: url("../img/principal.jpeg");
+    background-size: cover;
+    margin-bottom: 0px;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  width: 100%;
+  align-items: start;
+}
+.contenedor-principal-novedades{
+    margin: 30px auto;
+    padding: 30px;
+    background: #ffffffe0;
+    margin-left: 10%;
+    width: 120%;
+    border-radius: 8px;
+}
+.contenedor-principal-novedades h2{
+    color: #28B463;
+    text-align: center;
+    font-size: 40px;
+    padding: 0px;
+    margin: 0px 0px 15px;
+}
+.contenedor-principal-novedades table {
+    width: 100%;
+}
+.contenedor-principal-novedades table th{
+    color: black;
+    font-size: 20px;
+    text-align: left;
+    border-bottom: 1px solid #AAB7B8;
+}
+.contenedor-principal-novedades table td{
+    padding: 5px 0px 30px;
+}
+.contenedor-principal-tablas{
+    margin: 30px auto ;
+    padding: 10px;
+    background: #ffffffe0;
+    margin-right: 5%;
+    border-radius: 8px;
+}
+.contenedor-principal-tablas section{
+    margin: 15px;
+}
+.contenedor-principal-tablas section caption{
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    color: #28B463;
+}
+.contenedor-principal-tablas section table{
+    border: 1px solid black;
+    background: white;
+    border-collapse: collapse;
+    width: 300px;
+}
+.contenedor-principal-tablas section td, .contenedor-principal-tablas section th{
+    border: 1px solid black;
+    text-align: center;
+}
+.contenedor-principal-tablas section th{
+    background: #28B463;
+    color: white;
+}
+.contenedor-principal-tablas section tr:nth-child(even){
+    background-color: #E5E7E9;
+}
+.contenedor-principal-tablas section tr:nth-child(odd){
+    background-color: white;
+}
+
+
+
+
+.fondo-listado-partidos{
+    background: url("../img/jornadas.jpg");
+    background-size: cover;
+    margin-bottom: 0px;
+}
+.contenedor-listado-partidos{
+    margin: 30px auto ;
+    padding: 10px;
+    background: #ffffffe0;
+    width: 80%;
+    border-radius: 8px;
+    align-items: center;
+    
+}
+.contenedor-listado-partidos h1{
+    color: #28B463;
+    text-align: center;
+}
+.contenedor-listado-partidos caption{
+    text-align: left;
+    font-size: 17px;
+    font-weight: bold;
+    color: #28B463;
+    padding: 0px 0px 5px;
+}
+.contenedor-listado-partidos table{
+    background: #ffffffe0;
+    border-collapse: collapse;
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
+}
+.contenedor-listado-partidos table th{
+    border-top: 1px solid #AAB7B8;
+    padding: 5px 0px 5px;
+    background: #28B463;
+    color: white;
+}
+.contenedor-listado-partidos tr:nth-child(even){
+    background-color: #E5E7E9;
+}
+.contenedor-listado-partidos tr:nth-child(odd){
+    background-color: white;
+}
+.btn-detalles{
+    background-color: #5499C7;
+    margin: 2px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+
 
 

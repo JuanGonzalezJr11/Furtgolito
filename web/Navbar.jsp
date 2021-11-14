@@ -8,8 +8,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+        <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
+    </head>
     <nav class="nav">
-        <h1 id="titulo-iniciar-sesion">
+        <h1 class="titulo-inicio-sesion">
             Furtgolito
         </h1>
         <c:choose>
