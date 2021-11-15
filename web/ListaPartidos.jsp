@@ -19,20 +19,22 @@
         <%@include file = "LoginLogout.jsp" %>
         <%@include file = "Navbar.jsp" %>
         <div class="contenedor-listado-partidos">
+            <h1>
+                Jornadas y partidos
+            </h1>
             <c:if test="${!empty usuario}">
                 <a href="/Furtgolito/AltaPartidoServlet">
-                    <button>
+                    <button class="btn-nuevo-partido">
                         Nuevo partido
                     </button>
                 </a>
                 <br>
             </c:if>
-            <h1>
-                Jornadas y partidos
-            </h1>
             <c:choose>
                 <c:when test="${gestor.cantidadPartidos == 0}">
-                    No se han cargado partidos aún.
+                    <p class="texto-lista-vacia">
+                        No se han cargado partidos aún.
+                    </p>
                 </c:when>
                 <c:otherwise>
                     <c:forEach items="${gestor.listadoJornadas}" var="lj">
@@ -57,8 +59,8 @@
                                     <th>
                                         Equipo visitante
                                     </th>
-                                    <th>
-                                        
+                                    <th colspan="7">
+
                                     </th>
                                 </tr>
                             </thead>
@@ -111,7 +113,7 @@
                                             <c:if test="${!empty usuario}">
                                                 <td>
                                                     <a href="/Furtgolito/ModificarPartidoServlet?idPartido=${lp.idPartido}">
-                                                        <button>
+                                                        <button class="btn-modificar">
                                                             Modificar
                                                         </button>
                                                     </a>
@@ -120,14 +122,14 @@
                                                     <c:when test="${lp.estado == false}">
                                                         <td>
                                                             <a href="/Furtgolito/EliminarPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button>
+                                                                <button class="btn-eliminar">
                                                                     Eliminar
                                                                 </button>
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button>
+                                                                <button class="btn-resultado">
                                                                     Resultado
                                                                 </button>
                                                             </a>
@@ -136,21 +138,21 @@
                                                     <c:otherwise>
                                                         <td>
                                                             <a href="/Furtgolito/LimpiarPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button>
+                                                                <button class="btn-limpiar">
                                                                     Limpiar
                                                                 </button>
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button>
+                                                                <button class="btn-resultado">
                                                                     Resultado
                                                                 </button>
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a href="/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button>
+                                                                <button class="btn-cargar-detalles">
                                                                     Cargar detalles
                                                                 </button>
                                                             </a>
@@ -167,5 +169,10 @@
                 </c:otherwise>
             </c:choose>
         </div>
+        <footer>
+            <p>
+                Design by Juan Gonzalez | 2021
+            </p>
+        </footer>
     </body>
 </html>

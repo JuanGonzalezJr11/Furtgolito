@@ -46,7 +46,7 @@ footer p{
 .texto-lista-vacia{
     font-style: italic;
     margin: 3px;
-    text-align: center;
+    /*text-align: center;*/
 }
 .fondo-inicio-sesion{
     background: url("../img/FondoIniciarSesion.jpg");
@@ -191,6 +191,7 @@ footer p{
 }
 .contenedor-principal-tablas section{
     margin: 15px;
+    text-align: center;
 }
 .contenedor-principal-tablas section caption{
     text-align: center;
@@ -218,14 +219,11 @@ footer p{
 .contenedor-principal-tablas section tr:nth-child(odd){
     background-color: white;
 }
-
-
-
-
 .fondo-listado-partidos{
     background: url("../img/jornadas.jpg");
     background-size: cover;
     margin-bottom: 0px;
+    text-align: center;
 }
 .contenedor-listado-partidos{
     margin: 30px auto ;
@@ -234,7 +232,6 @@ footer p{
     width: 80%;
     border-radius: 8px;
     align-items: center;
-    
 }
 .contenedor-listado-partidos h1{
     color: #28B463;
@@ -246,6 +243,7 @@ footer p{
     font-weight: bold;
     color: #28B463;
     padding: 0px 0px 5px;
+    margin-top: 15px;
 }
 .contenedor-listado-partidos table{
     background: #ffffffe0;
@@ -256,7 +254,7 @@ footer p{
 }
 .contenedor-listado-partidos table th{
     border-top: 1px solid #AAB7B8;
-    padding: 5px 0px 5px;
+    padding: 5px 10px 5px;
     background: #28B463;
     color: white;
 }
@@ -265,6 +263,20 @@ footer p{
 }
 .contenedor-listado-partidos tr:nth-child(odd){
     background-color: white;
+}
+.btn-nuevo-partido{
+    background-color: #28B463;
+    margin: 2px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.btn-nuevo-partido:hover{
+    background-color: #2ECC71;
 }
 .btn-detalles{
     background-color: #5499C7;
@@ -277,6 +289,166 @@ footer p{
     border-top-right-radius: 8px;
     border: none;
 }
-
+.btn-detalles:hover{
+    background-color: #7FB3D5;
+}
+.btn-modificar{
+    background-color: #F5B041;
+    margin: 2px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.btn-modificar:hover{
+    background-color: #F8C471;
+}
+.btn-limpiar{
+    background-color: #717D7E;
+    margin: 2px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.btn-limpiar:hover{
+    background-color: #839192;
+}
+.btn-resultado{
+    background-color: #229954;
+    margin: 2px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.btn-resultado:hover{
+    background-color: #27AE60;
+}
+.btn-cargar-detalles{
+    background-color: #A569BD;
+    margin: 2px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+    width: 111px;
+}
+.btn-cargar-detalles:hover{
+    background-color: #BB8FCE;
+}
+.btn-eliminar{
+    background-color: #CD6155;
+    margin: 2px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.btn-eliminar:hover{
+    background-color: #D98880;
+}
+.fondo-alta-partido{
+    background: url("../img/altaPartido.jpg");
+    background-size: cover;
+    margin-bottom: 0px;
+    text-align: center;
+}
+.alta-partido-table{
+    background: #00000080;
+    width: 40%;
+    text-align: center;
+    margin-left: 30%;
+    margin-top: 10%;
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    color: white;
+    border: 1px solid black;
+}
+.alta-partido-table th{
+    padding: 5px;
+    text-align: right;
+    font-weight: normal;
+}
+.alta-partido-table td{
+    padding: 5px;
+    text-align: left;
+}
+.alta-partido-table caption{
+    color: #28B463;
+    font-size: 25px;
+    background: #00000080;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 5px;
+    border: 1px solid black;
+    border-bottom: 1px solid gray;
+    font-weight: bold;
+}
+.alta-partido-table input{
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    border: 1px solid gray;
+    outline: none;
+}
+.alta-partido-table select{
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    border: 1px solid gray;
+    outline: none;
+}
+.alta-partido-table option{
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    border: 1px solid gray;
+    outline: none;
+}
+.btn-agregar{
+    background-color: #28B463;
+    margin: 5px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.btn-agregar:hover{
+    background-color: #2ECC71;
+}
+.btn-volver{
+    background-color: #99A3A4;
+    margin: 5px;
+    padding: 10px;
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: none;
+}
+.btn-volver:hover{
+    background-color: #B2BABB;
+}
 
 

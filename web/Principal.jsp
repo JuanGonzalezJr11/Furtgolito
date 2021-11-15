@@ -25,7 +25,14 @@
                 </h2>
                 <c:choose>
                     <c:when test="${gestor.cantidadNovedades == 0}">
-                        No se han cargado novedades aún.
+                        <table>
+                            <caption>
+                                Novedades
+                            </caption>
+                        </table>
+                        <p class="texto-lista-vacia">
+                            No se han cargado novedades aún.
+                        </p>
                     </c:when>
                     <c:otherwise>
                         <table>

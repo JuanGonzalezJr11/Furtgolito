@@ -15,6 +15,33 @@
     </head>
     <body>
         <form method="post" action="/Furtgolito/AltaGolServlet">
+            <table>
+            <thead>
+                    <tr>
+                        Jornada:
+                    </tr>
+                    <tr>
+                        Fecha:
+                    </tr>
+                    <tr>
+                        Hora:
+                    </tr>
+                    <tr>
+                        
+                    </tr>
+                    <tr>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <input type="text">
+                    </tr>
+                    <tr>
+                        <input type="text">
+                    </tr>
+                </tbody>
+            </table>
             <div>
                 <h1>
                     Nuevo gol
