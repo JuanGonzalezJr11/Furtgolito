@@ -11,11 +11,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+        <!-- Iconos: -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <!-- Adaptación de la pantalla a los distintos dispositivos sin tener que utilizar zoom. -->
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <title>Inicio sesión</title>
     </head>
-    <body class="fondo-inicio-sesion">
-        <h1 class="titulo-inicio-sesion">
+    <body class="inicio-sesion">
+        <h1 class="logo">
             Furtgolito
         </h1>
         <div class="contenedor-inicio-sesion">
@@ -24,19 +27,21 @@
                     Inicio de sesión
                 </h1>
                 <label>
-                    Nombre/Usuario:
+                    <i class="material-icons icono-inicio-sesion">person</i>
+                    Usuario:
                 </label>
                 <input type="text" name="txtUsuario" id="txtUsuario" required/>
                 <label>
+                    <i class="material-icons icono-inicio-sesion">lock</i>
                     Contraseña:
                 </label>
                 <input type="password" name="txtContrasena" id="txtContrasena" required/>
                 <br>
-                <button type="submit" class="boton-inicio-sesion">
+                <button type="submit" class="inicio-sesion">
                     Iniciar sesión
                 </button>
                 <c:if test="${not empty error}">
-                    <div class="mensaje-error-iniciar-sesion">
+                    <div>
                         <p>
                             <strong>${error}</strong>
                         </p>

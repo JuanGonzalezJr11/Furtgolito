@@ -8,18 +8,20 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:useBean id="gestor" scope="request" class="controlador.GestorBaseDatos"/>
 <!DOCTYPE html>
-<html>
+<html style="height: 1000px;">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <title>Furtgolito - Inicio</title>
     </head>
-    <body class="fondo-principal">
+    <header>
         <%@include file = "LoginLogout.jsp" %>
         <%@include file = "Navbar.jsp" %>
-        <div class="wrapper">
-            <div class="contenedor-principal-novedades">
+    </header>
+    <body class="principal">
+        <div class="contenedor-principal">
+            <div class="contenedor-secciones novedades">
                 <h2>
                     Novedades
                 </h2>
@@ -30,7 +32,7 @@
                                 Novedades
                             </caption>
                         </table>
-                        <p class="texto-lista-vacia">
+                        <p>
                             No se han cargado novedades aún.
                         </p>
                     </c:when>
@@ -54,105 +56,101 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="contenedor-principal-tablas">
-                <section>
-                    <c:choose>
-                        <c:when test="${gestor.cantidadEquipos == 0}">
-                            <table>
-                                <caption>
-                                    Posiciones
-                                </caption>
-                            </table>
-                            <p class="texto-lista-vacia">
-                                No se han cargado equipos aún.
-                            </p>
-                        </c:when>
-                        <c:otherwise>
-                            <table>
-                                <caption>
-                                    Posiciones
-                                </caption>
-                                <thead>
+            <div class="contenedor-secciones tablas">
+                <c:choose>
+                    <c:when test="${gestor.cantidadEquipos == 0}">
+                        <table>
+                            <caption>
+                                Posiciones
+                            </caption>
+                        </table>
+                        <p>
+                            No se han cargado equipos aún.
+                        </p>
+                    </c:when>
+                    <c:otherwise>
+                        <table>
+                            <caption>
+                                Posiciones
+                            </caption>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Posición
+                                    </th>
+                                    <th>
+                                        Equipo
+                                    </th>
+                                    <th>
+                                        Puntos
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${gestor.posicionesEquiposTOP3}" var="e">
                                     <tr>
-                                        <th>
-                                            Posición
-                                        </th>
-                                        <th>
-                                            Equipo
-                                        </th>
-                                        <th>
-                                            Puntos
-                                        </th>
+                                        <td>
+                                            ${e.posicion}
+                                        </td>
+                                        <td>
+                                            ${e.nombre}
+                                        </td>
+                                        <td>
+                                            ${e.puntos}
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${gestor.posicionesEquiposTOP3}" var="e">
-                                        <tr>
-                                            <td>
-                                                ${e.posicion}
-                                            </td>
-                                            <td>
-                                                ${e.nombre}
-                                            </td>
-                                            <td>
-                                                ${e.puntos}
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </c:otherwise>
-                    </c:choose>
-                </section>
-                <section>
-                    <c:choose>
-                        <c:when test="${gestor.cantidadGolesTotales == 0}">
-                            <table>
-                                <caption>
-                                    Goleadores
-                                </caption>
-                            </table>
-                            <p class="texto-lista-vacia">
-                                No hay registro de goleadores aún.
-                            </p>
-                        </c:when>
-                        <c:otherwise>
-                            <table>
-                                <caption>
-                                    Goleadores
-                                </caption>
-                                <thead>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${gestor.cantidadGolesTotales == 0}">
+                        <table>
+                            <caption>
+                                Goleadores
+                            </caption>
+                        </table>
+                        <p>
+                            No hay registro de goleadores aún.
+                        </p>
+                    </c:when>
+                    <c:otherwise>
+                        <table>
+                            <caption>
+                                Goleadores
+                            </caption>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Equipo
+                                    </th>
+                                    <th>
+                                        Goles
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${gestor.tablaGoleadoresTOP3}" var="g">
                                     <tr>
-                                        <th>
-                                            Nombre
-                                        </th>
-                                        <th>
-                                            Equipo
-                                        </th>
-                                        <th>
-                                            Goles
-                                        </th>
+                                        <td>
+                                            ${g.nombre} ${g.apellido}
+                                        </td>
+                                        <td>
+                                            ${g.nombreEquipo}
+                                        </td>
+                                        <td>
+                                            ${g.cantidadGoles}
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${gestor.tablaGoleadoresTOP3}" var="g">
-                                        <tr>
-                                            <td>
-                                                ${g.nombre} ${g.apellido}
-                                            </td>
-                                            <td>
-                                                ${g.nombreEquipo}
-                                            </td>
-                                            <td>
-                                                ${g.cantidadGoles}
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </c:otherwise>
-                    </c:choose>
-                </section>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
         <footer>

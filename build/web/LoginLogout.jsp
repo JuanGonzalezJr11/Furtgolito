@@ -12,22 +12,24 @@
         <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <c:choose>
-            <c:when test="${!empty usuario}">
-                <div class="loginLogout">
-                    <%= " ¡Hola " + request.getSession().getAttribute("usuario") + "! "%>
-                    <a href="/Furtgolito/CierreSesionServlet">
-                        Cerrar sesión
-                    </a>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div class="loginLogout">
-                    <a href="/Furtgolito/InicioSesionServlet">
-                        Iniciar sesión
-                    </a>
-                </div>
-            </c:otherwise>
-        </c:choose>
+        <div class="login-logout">
+            <c:choose>
+                <c:when test="${!empty usuario}">
+                    <div>
+                        <%= " ¡Hola " + request.getSession().getAttribute("usuario") + "! "%>
+                        <a href="/Furtgolito/CierreSesionServlet">
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div>
+                        <a href="/Furtgolito/InicioSesionServlet">
+                            Iniciar sesión
+                        </a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </body>
 </html>

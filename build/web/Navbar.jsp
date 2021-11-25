@@ -9,73 +9,106 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
         <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
     </head>
-    <nav class="nav">
-        <h1 class="titulo-inicio-sesion">
-            Furtgolito
-        </h1>
-        <c:choose>
-            <c:when test="${!empty usuario}">
-                <div class="nav-con-logeo">
-                    <a href="/Furtgolito/Principal.jsp">
-                        Inicio
-                    </a>
-                    <a href="/Furtgolito/ListaUsuarios.jsp">
-                        Usuarios
-                    </a>
-                    <a href="/Furtgolito/ListaPartidos.jsp">
-                        Jornadas y partidos
-                    </a>
-                    <a href="">
-                        Tabla posiciones
-                    </a>
-                    <a href="/Furtgolito/TablaGoleadores.jsp">
-                        Tabla goleadores
-                    </a>
-                    <a href="/Furtgolito/ListaEquipos.jsp">
-                        Equipos
-                    </a>
-                    <a href="/Furtgolito/ListaJugadores.jsp">
-                        Jugadores
-                    </a>
-                    <a href="/Furtgolito/ListaArbitros.jsp">
-                        Arbitros
-                    </a>
-                    <a href="/Furtgolito/ListaCampos.jsp">
-                        Campos
-                    </a>
-                    <a href="/Furtgolito/ListaNovedades.jsp">
-                        Novedades
-                    </a>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div>
-                    <a href="/Furtgolito/Principal.jsp">
-                        Inicio
-                    </a>
-                    <a href="/Furtgolito/ListaPartidos.jsp">
-                        Jornadas y partidos
-                    </a>
-                    <a href="">
-                        Tabla posiciones
-                    </a>
-                    <a href="/Furtgolito/TablaGoleadores.jsp">
-                        Tabla goleadores
-                    </a>
-                    <a href="/Furtgolito/ListaEquipos.jsp">
-                        Equipos
-                    </a>
-                    <a href="/Furtgolito/ListaJugadores.jsp">
-                        Jugadores
-                    </a>
-                    <a href="/Furtgolito/ListaArbitros.jsp">
-                        Arbitros
-                    </a>
-                </div>
-            </c:otherwise>
-        </c:choose>
-    </nav>
+    <body>
+        <div class="navbar">
+            <h1 class="logo">
+                Furtgolito
+            </h1>
+            <ul>
+                <c:choose>
+                    <c:when test="${!empty usuario}">
+                        <li>
+                            <a href="/Furtgolito/Principal.jsp">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaUsuarios.jsp">
+                                Usuarios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaPartidos.jsp">
+                                Jornadas y partidos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                Tabla posiciones
+                            </a> 
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/TablaGoleadores.jsp">
+                                Tabla goleadores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaEquipos.jsp">
+                                Equipos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaJugadores.jsp">
+                                Jugadores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaArbitros.jsp">
+                                Arbitros
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaCampos.jsp">
+                                Campos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaNovedades.jsp">
+                                Novedades
+                            </a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li>
+                            <a href="/Furtgolito/Principal.jsp">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaPartidos.jsp">
+                                Jornadas y partidos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                Tabla posiciones
+                            </a> 
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/TablaGoleadores.jsp">
+                                Tabla goleadores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaEquipos.jsp">
+                                Equipos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaJugadores.jsp">
+                                Jugadores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Furtgolito/ListaArbitros.jsp">
+                                Arbitros
+                            </a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div>
+    </body>
 </html>
