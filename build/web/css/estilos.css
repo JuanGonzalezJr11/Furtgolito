@@ -20,6 +20,61 @@ button{
     text-align: center;
     border: none;
 }
+button.nuevo-partido{
+    background-color: #27AE60;
+    color: white;
+}
+button.nuevo-partido:hover{
+    background-color: #52BE80;
+}
+button.detalles{
+    background-color: #5499C7;
+    color: white;
+    margin: 0px;
+}
+button.detalles:hover{
+    background-color: #7FB3D5;
+}
+button.modificar{
+    background-color: #F5B041;
+    color: white;
+    margin: 0px;
+}
+button.modificar:hover{
+    background-color: #F8C471;
+}
+button.eliminar{
+    background-color: #C0392B;
+    color: white;
+    margin: 0px;
+}
+button.eliminar:hover{
+    background-color: #CD6155;
+}
+button.resultado{
+    background-color: #A569BD;
+    color: white;
+    margin: 0px;
+}
+button.resultado:hover{
+    background-color: #BB8FCE;
+}
+button.cargar-detalles{
+    background-color: #21618C;
+    color: white;
+    margin: 0px;
+}
+button.cargar-detalles:hover{
+    background-color: #2874A6;
+}
+button.limpiar{
+    background-color: #797D7F;
+    color: white;
+    margin: 0px;
+}
+button.limpiar:hover{
+    background-color: #909497;
+}
 footer{
     background-color: rgb(0, 0, 0, 0.5);
     text-align: center;
@@ -235,4 +290,47 @@ div.contenedor-secciones.tablas caption{
     div.contenedor-secciones.tablas{
         width: 90%;
     }
+}
+
+/* JORNADAS Y PARTIDOS: */
+body.jornadas-y-partidos{
+    background-image: url("../img/jornadas.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+}
+div.contenedor-jornadas-y-partidos{
+    position: relative;
+    width: 80%;
+    margin: auto;
+    top: 20px;
+    background-color: rgb(277, 277, 277, 0.9);
+    border-radius: 8px;
+    font-family: 'Outfit';
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+div.contenedor-jornadas-y-partidos h1{
+    font-size: 35px;
+    color: #27AE60;
+    padding: 0px;
+    margin: 0px 0px 10px 0px;
+}
+div.contenedor-jornadas-y-partidos caption{
+    color: #27AE60;
+    font-size: 25px;
+    text-align: left;
+    border-bottom: 1px solid grey;
+}
+div.contenedor-jornadas-y-partidos table{
+    width: 95%;
+    margin: auto auto 20px auto;
+    
+}
+div.contenedor-jornadas-y-partidos th{
+    color: #27AE60;
+}
+@media screen and (max-width: 960px){
+    
 }

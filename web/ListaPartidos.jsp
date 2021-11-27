@@ -12,19 +12,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <title>Furtgolito - Listado de partidos</title>
     </head>
-    <body class="fondo-listado-partidos">
-        <%@include file = "LoginLogout.jsp" %>
-        <%@include file = "Navbar.jsp" %>
-        <div class="contenedor-listado-partidos">
+    <body class="jornadas-y-partidos">
+        <header>
+            <%@include file = "LoginLogout.jsp" %>
+            <%@include file = "Navbar.jsp" %>
+        </header>
+        <div class="contenedor-jornadas-y-partidos">
             <h1>
                 Jornadas y partidos
             </h1>
             <c:if test="${!empty usuario}">
                 <a href="/Furtgolito/AltaPartidoServlet">
-                    <button class="btn-nuevo-partido">
+                    <button class="nuevo-partido">
                         Nuevo partido
                     </button>
                 </a>
@@ -32,7 +34,7 @@
             </c:if>
             <c:choose>
                 <c:when test="${gestor.cantidadPartidos == 0}">
-                    <p class="texto-lista-vacia">
+                    <p>
                         No se han cargado partidos aún.
                     </p>
                 </c:when>
@@ -105,7 +107,7 @@
                                             </td>
                                             <td>
                                                 <a href="/Furtgolito/DetallesPartidoServlet?idPartido=${lp.idPartido}">
-                                                    <button class="btn-detalles">
+                                                    <button class="detalles">
                                                         Detalles
                                                     </button>
                                                 </a>
@@ -113,7 +115,7 @@
                                             <c:if test="${!empty usuario}">
                                                 <td>
                                                     <a href="/Furtgolito/ModificarPartidoServlet?idPartido=${lp.idPartido}">
-                                                        <button class="btn-modificar">
+                                                        <button class="modificar">
                                                             Modificar
                                                         </button>
                                                     </a>
@@ -122,14 +124,14 @@
                                                     <c:when test="${lp.estado == false}">
                                                         <td>
                                                             <a href="/Furtgolito/EliminarPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button class="btn-eliminar">
+                                                                <button class="eliminar">
                                                                     Eliminar
                                                                 </button>
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button class="btn-resultado">
+                                                                <button class="resultado">
                                                                     Resultado
                                                                 </button>
                                                             </a>
@@ -138,21 +140,21 @@
                                                     <c:otherwise>
                                                         <td>
                                                             <a href="/Furtgolito/LimpiarPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button class="btn-limpiar">
+                                                                <button class="limpiar">
                                                                     Limpiar
                                                                 </button>
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a href="/Furtgolito/ResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button class="btn-resultado">
+                                                                <button class="resultado">
                                                                     Resultado
                                                                 </button>
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a href="/Furtgolito/CargarDetallesResultadoPartidoServlet?idPartido=${lp.idPartido}">
-                                                                <button class="btn-cargar-detalles">
+                                                                <button class="cargar-detalles">
                                                                     Cargar detalles
                                                                 </button>
                                                             </a>
