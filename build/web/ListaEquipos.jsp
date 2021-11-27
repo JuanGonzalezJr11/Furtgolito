@@ -11,62 +11,72 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
         <title>Listado de equipos</title>
     </head>
-    <body>
+    <header>
         <%@include file = "LoginLogout.jsp" %>
         <%@include file = "Navbar.jsp" %>
-        <br>
-        <h1>
-            Listado de equipos
-        </h1>
-        <c:choose>
-            <c:when test="${gestor.cantidadEquipos == 0}">
-                No se han cargados equipos aún.
-            </c:when>
-            <c:otherwise>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Nombre
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${gestor.listadoEquipos}" var="listadoEquipos">
+    </header>
+    <body class="equipos">
+        <div class="contenedor-listados equipos">
+            <h1>
+                Listado de equipos
+            </h1>
+            <c:choose>
+                <c:when test="${gestor.cantidadEquipos == 0}">
+                    No se han cargados equipos aún.
+                </c:when>
+                <c:otherwise>
+                    <table>
+                        <thead>
                             <tr>
-                                <td>
-                                    ${listadoEquipos.nombre}
-                                </td>
-                                <c:if test="${!empty usuario}">
+                                <th colspan="2">
+                                    Equipos
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${gestor.listadoEquipos}" var="listadoEquipos">
+                                <tr>
                                     <td>
-                                        <a href="/Furtgolito/ModificarEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
-                                            <button>
-                                                Modificar
+                                        ${listadoEquipos.nombre}
+                                    </td>
+                                    <c:if test="${!empty usuario}">
+                                        <td>
+                                            <a href="/Furtgolito/ModificarEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
+                                                <button>
+                                                    Modificar
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </c:if>
+                                    <td>
+                                        <a href="/Furtgolito/VerEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
+                                            <button class="detalles equipos">
+                                                Ver
                                             </button>
                                         </a>
                                     </td>
-                                </c:if>
-                                <td>
-                                    <a href="/Furtgolito/VerEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
-                                        <button>
-                                            Ver
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:otherwise>
-        </c:choose>
-        <c:if test="${!empty usuario}">
-            <a href="/Furtgolito/AltaEquipoServlet">
-                <button>
-                    Nuevo equipo
-                </button>
-            </a>
-        </c:if>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:otherwise>
+            </c:choose>
+            <c:if test="${!empty usuario}">
+                <a href="/Furtgolito/AltaEquipoServlet">
+                    <button>
+                        Nuevo equipo
+                    </button>
+                </a>
+            </c:if>
+        </div>
+        <footer>
+            <p>
+                Design by Juan Gonzalez | 2021
+            </p>
+        </footer>
     </body>
 </html>

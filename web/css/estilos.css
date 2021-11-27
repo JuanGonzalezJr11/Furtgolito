@@ -13,6 +13,30 @@ body{
 header{
     min-height: 120px;
 }
+div.contenedor-listados{
+    position: relative;
+    width: 80%;
+    margin: auto;
+    padding: 5px;
+    top: 20px;
+    background-color: rgb(277, 277, 277, 0.9);
+    border-radius: 8px;
+    font-family: 'Outfit';
+    text-align: center;
+}
+div.contenedor-listados h1{
+    color: #27AE60;
+    font-size: 35px;
+    padding: 0xp;
+    margin: 0px 0px 15px 0px;
+}
+div.contenedor-listados table{
+    position: relative;
+    margin: auto;
+}
+div.contenedor-listados th{
+    color: #27AE60;
+}
 button{
     border-radius: 8px;
     margin: 15px;
@@ -333,4 +357,29 @@ div.contenedor-jornadas-y-partidos th{
 }
 @media screen and (max-width: 960px){
     
+}
+
+/* EQUIPOS: */
+body.equipos{
+    background-image: url("../img/equipos.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+}
+div.contenedor-listados.equipos{
+    width: 50%;
+}
+div.contenedor-listados.equipos th{
+    border-bottom: 1px solid grey;
+}
+div.contenedor-listados.equipos td{
+    font-weight: bolder;
+}
+button.detalles.equipos{
+    margin: 10px;
+}
+@media screen and (max-width: 720px){
+    div.contenedor-listados.equipos{
+        width: 80%;
+    }
 }
