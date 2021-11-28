@@ -10,6 +10,12 @@ body{
     margin: 0px;
     background: linear-gradient(#27AE60, white);
 }
+body.fondo{
+    background-color: linear-gradient(#27AE60, white);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+}
 header{
     min-height: 120px;
 }
@@ -382,4 +388,47 @@ button.detalles.equipos{
     div.contenedor-listados.equipos{
         width: 80%;
     }
+}
+
+/* ARBITROS: */
+body.fondo.arbitros{
+    background-image: url("../img/arbitros2.jpg");
+}
+div.contenedor-listados.arbitros table{
+    width: 35%;
+}
+
+/* CAMPO: */
+body.fondo.campos{
+    background-image: url("../img/campo1.jpg");
+}
+div.contenedor-listados.campos{
+    width: 50%;
+}
+div.contenedor-listados.campos table{
+    width: 35%;
+}
+div.contenedor-listados.campos th{
+    border-bottom: 1px solid grey;
+}
+div.contenedor-listados.campos td{
+    padding: 10px 5px 0px 0px;
+}
+@media screen and (max-width: 720px){
+    div.contenedor-listados.campos{
+        width: 80%;
+    }
+}
+
+/* NOVEDADES: */
+body.fondo.novedades{
+    background-image: url("../img/novedades.jpg");
+}
+div.contenedor-listados.novedades td{
+    text-align: left;
+    border-bottom: 1px solid grey;
+    padding: 10px 0px 5px 0px;
+}
+.titulo-novedad{
+    font-weight: bolder;
 }

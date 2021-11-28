@@ -32,7 +32,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="2">
+                                <th colspan="3">
                                     Equipos
                                 </th>
                             </tr>
@@ -46,7 +46,7 @@
                                     <c:if test="${!empty usuario}">
                                         <td>
                                             <a href="/Furtgolito/ModificarEquipoServlet?idEquipo=${listadoEquipos.idEquipo}">
-                                                <button>
+                                                <button class="modificar">
                                                     Modificar
                                                 </button>
                                             </a>
@@ -67,7 +67,7 @@
             </c:choose>
             <c:if test="${!empty usuario}">
                 <a href="/Furtgolito/AltaEquipoServlet">
-                    <button>
+                    <button class="nuevo-partido">
                         Nuevo equipo
                     </button>
                 </a>
